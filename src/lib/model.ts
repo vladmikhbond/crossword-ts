@@ -12,7 +12,9 @@ const ATTEMPTS = 100;          // кількість кросвордів-кан
 export function getBestCrossword(topic: string, size: number) {
     
     // load terms from local storage
-    let allTerms = Storage.readTerms(topic);
+    let allTerms = Storage
+        .readTerms(topic)
+        .filter((t:Term) => t.word.length <= size);
     allTerms.sort((a:Term, b: Term) => a.freq - b.freq);
 
     let n = allTerms.length * 3/4 | 0;

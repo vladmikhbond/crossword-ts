@@ -71,7 +71,7 @@ class Crossword
         // Find all the suitable places      
         let places = [];
         let word = this.terms[0].word;
-        for (let r = 0; r < this.size; r += 2) {
+        for (let r = 0; r < this.size; r++) {
             for (let c = 0; c < this.size - word.length; c++) {
                 let xs = this.estimate(word, r, c);
                 if (xs > 0) {
