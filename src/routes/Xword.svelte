@@ -2,24 +2,29 @@
 
 <script lang="ts">
     import type Crossword from "$lib/crossword";
-    import {Used, EMPTY, HOR} from "$lib/classes";
-
-    enum WriteDir { None, Hor, Ver };
+    import {Used, EMPTY, Dir} from "$lib/classes";
 
 
     export let cw: Crossword; 
-    export let hl = '';
+    export let highlight = '';
     export let disabled = false;
 
-    let writeDir = WriteDir.None;  
+    let writeDir = Dir.None;  
 
 
     /** Рядок для користувача з дефініцієй терміну */
-    function termDef(info: Used | null) 
+    function termDefinition(info: Used | null) 
     { 
-        if (!info) return '';
-        let dir = info.dir === HOR ? 'Hor' : 'Ver';
-        return `(${dir}) ${info.term.def}`;
+        if (!info) {
+            return '';
+        }
+        let dir = info.dir === Dir.Hor ? 'Hor' : 'Ver';
+        let def = `(${dir}) ${info.term.def}`;
+        if (info.term.def.indexOf('©') == -1) {
+            return def;
+        }
+        let otherDir = info.dir === Dir.Ver ? 'Hor' : 'Ver'; 
+        return def.replace('©', otherDir);        
     }
 
 
@@ -49,27 +54,30 @@
         }
 
         if (downEl && rightEl) {
-            if (writeDir == WriteDir.None)
-                writeDir = WriteDir.Ver;
+            if (cw.field[r+1][c].char === EMPTY && cw.field[r][c+1].char !== EMPTY) {
+               writeDir = Dir.Ver;
+            } else if (cw.field[r+1][c].char !== EMPTY && cw.field[r][c+1].char === EMPTY) {
+               writeDir = Dir.Hor;  
+            }
         } else if (downEl) {
-            writeDir = WriteDir.Ver;
+            writeDir = Dir.Ver;
         } else if (rightEl) {
-            writeDir = WriteDir.Hor;
+            writeDir = Dir.Hor;
         } else {
-            writeDir == WriteDir.None
+            writeDir == Dir.None
         }
 
         switch (writeDir) {
-            case WriteDir.Ver: downEl?.focus(); 
+            case Dir.Ver: downEl?.focus(); 
                 break;
-            case WriteDir.Hor: rightEl?.focus(); 
+            case Dir.Hor: rightEl?.focus(); 
                 break;
         }           
     }
 
     
-	function highlight(r:number, c:number) {
-        hl = termDef(cw.field[r][c].info);
+	function assign_highlight(r:number, c:number) {
+        highlight = termDefinition(cw.field[r][c].info);
 	}
 
 
@@ -85,16 +93,14 @@
     }
 
     function input_keyup(e: KeyboardEvent, r: number, c:number) {
-        if (e.key.length == 1) {
+        if (e.key && e.key.length == 1) {
             // Щоб зоставалося лише одна буква у полі вводу.
             cw.field[r][c].char = e.key;
         }
         paintSolvedWord(r, c); 
         moveFocusAfter(e, r, c);
     }
-    
-    
-    
+       
 </script>
 
 
@@ -108,10 +114,10 @@
                         id={(r * 100 + c).toString()}
                         bind:value='{cw.field[r][c].char}'
                         on:keyup={e => input_keyup(e, r, c)}  
-                        on:focus={() => highlight(r, c)} 
+                        on:focus={() => assign_highlight(r, c)} 
                         class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
-                        title="{termDef(cw.field[r][c].info)}"
+                        title="{termDefinition(cw.field[r][c].info)}"
                         disabled={ disabled}                                                 
                         />        
                 {:else}
@@ -123,7 +129,7 @@
     {/each}
 </table>
 
-<pre class="highlight">{hl}</pre>
+<pre class="highlight">{highlight}</pre>
 
 
 <style>

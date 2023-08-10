@@ -72,7 +72,7 @@
         <button on:click={ newButton_click } class="new-button">New</button>
         <button on:click={ stopButton_click } class="stop-button">Stop</button> 
     </p>
-    <Xword cw={cw} hl={hl} disabled={disabled} />
+    <Xword cw={cw} highlight={hl} disabled={disabled} />
 </div>
 
 <style>

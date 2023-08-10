@@ -1,4 +1,4 @@
-import { Term, Used, Cell, EMPTY, HOR, VER } from './classes'
+import { Term, Used, Cell, EMPTY, Dir } from './classes'
 import {shuffleArray} from './utils'
 
 
@@ -70,9 +70,9 @@ class Crossword
             } 
             else 
             {
-                // the cell already has one info, other will be HOR
-                let dir = used.dir == HOR ? HOR : VER
-                cell.info.term.def += `\n(${dir}) ` + used.term.def;
+                // the cell already has one info
+                // let dir = used.dir == Dir.Hor ? Dir.Hor : Dir.Ver
+                cell.info.term.def += `\n(©) ` + used.term.def;
             }
         }
     }
@@ -134,14 +134,14 @@ class Crossword
         let xCount = 0;
         for (let i = 0; i < word.length; i++) {
             let cell = this.field[r][c + i];
-            // клітина пуста - ok
+            // клітина пуста -> ok
             if (cell.char === EMPTY) 
                 continue;
-            // літери клітини и слова не співпадають - wrong    
+            // літери клітини и слова не співпадають -> wrong    
             if (cell.char !== word[i])
                 return -1;
-            // літери клітини и слова співпадають, але напрям клітини HOR - wrong  
-            if (cell.dir === HOR)
+            // літери клітини и слова співпадають, але напрям клітини Dir.Hor -> wrong  
+            if (cell.dir === Dir.Hor)
                 return -1;
             //          
             xCount++;
@@ -157,9 +157,9 @@ class Crossword
         let word = term.word;
 
         for (let i = 0; i < word.length; i++) {
-            this.field[r][c + i] = new Cell(word[i], HOR);
+            this.field[r][c + i] = new Cell(word[i], Dir.Hor);
         }
-        let newUsed = new Used(term, r, c, HOR);
+        let newUsed = new Used(term, r, c, Dir.Hor);
 
         // move from 'this.useds' to 'this.terms'
         this.useds.push(newUsed);
@@ -172,7 +172,7 @@ class Crossword
     { 
 
         function transDir(cell: Cell | Used) {
-            cell.dir = cell.dir == HOR ? VER : HOR;
+            cell.dir = cell.dir == Dir.Hor ? Dir.Ver : Dir.Hor;
         }
         
         // ------------------body-------------------------
@@ -203,7 +203,7 @@ class Crossword
         const word = used.term.word;
         let arr: string[] = [];
         for (let i = 0; i < word.length; i++) {
-            let cell = dir === VER ? 
+            let cell = dir === Dir.Ver ? 
                this.field[row + i][col] : 
                this.field[row][col + i];
             let char = cell.char.trim().slice(0, 1);
@@ -225,7 +225,7 @@ class Crossword
         for (let used of useds) {
             let word = used.term.word
             for (let i = 0; i < word.length; i++) {
-                if (used.dir == HOR)
+                if (used.dir == Dir.Hor)
                    this.field[used.row][used.col + i].char = word[i];
                 else 
                    this.field[used.row + i][used.col].char = word[i];        

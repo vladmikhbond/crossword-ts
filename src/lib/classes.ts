@@ -3,6 +3,9 @@ import {data}  from './data'
 export const EMPTY = '.';
 export const HOR = 'h', VER = 'v';
 
+export enum Dir { None, Hor, Ver };
+
+
 export class Term {
 
     word: string;
@@ -35,11 +38,11 @@ export class Term {
 export class Cell {
 
     char: string;
-    dir: string;
+    dir: Dir;
     solved: boolean;
     info: Used | null;
 
-    constructor(char = EMPTY, dir=HOR, solved=false) {
+    constructor(char = EMPTY, dir=Dir.Hor, solved=false) {
         this.char = char;
         this.dir = dir;
         this.solved = solved;
@@ -52,9 +55,9 @@ export class Used {
     term: Term;
     row: number;
     col: number;
-    dir: string;
+    dir: Dir;
 
-    constructor(term: Term, r: number, c:number, dir:string) {
+    constructor(term: Term, r: number, c:number, dir:Dir) {
         this.term = term;
         this.row = r;
         this.col = c;
@@ -65,7 +68,7 @@ export class Used {
         const arr = [];
         let word = this.term.word;
         for (let i = 0; i < word.length; i++) {
-            let id = this.dir === HOR ? 
+            let id = this.dir === Dir.Hor ? 
                 this.row * 100 + (this.col + i) :
                 (this.row + i) * 100 + this.col
             arr.push(id);
