@@ -2,15 +2,16 @@
 
 <script lang="ts">
     import type Crossword from "$lib/crossword";
-    import {Used, EMPTY, HOR, VER} from "$lib/classes";
+    import {Used, EMPTY, HOR} from "$lib/classes";
+
+    enum WriteDir { None, Hor, Ver };
 
 
     export let cw: Crossword; 
     export let hl = '';
     export let disabled = false;
 
-    const STOP = "";
-    let writeDirection = STOP;  
+    let writeDir = WriteDir.None;  
 
 
     /** Рядок для користувача з дефініцієй терміну */
@@ -24,21 +25,14 @@
 
     function moveFocusAfter(event: KeyboardEvent, r:number, c:number) 
     {
-
-        let downId = ((r + 1) * 100 + c).toString();
-        let downEl = document.getElementById(((r + 1) * 100 + c) + "");
-
-        let upId = ((r - 1) * 100 + c).toString();
-        let upEl = document.getElementById(((r - 1) * 100 + c) + "");
-
-        let rightId = (r * 100 + c + 1).toString();
-        let rightEl = document.getElementById((r * 100 + c + 1) + "");
-
-        let leftId = (r * 100 + c - 1).toString();
-        let leftEl = document.getElementById((r * 100 + c - 1) + "");
-
         if (event.shiftKey || event.key == 'Backspace') 
             return;
+
+        let downEl = document.getElementById(((r + 1) * 100 + c) + "");
+        let upEl = document.getElementById(((r - 1) * 100 + c) + "");
+        let rightEl = document.getElementById((r * 100 + c + 1) + "");
+        let leftEl = document.getElementById((r * 100 + c - 1) + "");
+
         switch (event.key) {
             case 'ArrowUp':
                 upEl?.focus()
@@ -55,20 +49,20 @@
         }
 
         if (downEl && rightEl) {
-            if (writeDirection == STOP)
-                writeDirection = VER;
+            if (writeDir == WriteDir.None)
+                writeDir = WriteDir.Ver;
         } else if (downEl) {
-            writeDirection = VER;
+            writeDir = WriteDir.Ver;
         } else if (rightEl) {
-            writeDirection = HOR;
+            writeDir = WriteDir.Hor;
         } else {
-            writeDirection == STOP
+            writeDir == WriteDir.None
         }
 
-        switch (writeDirection) {
-            case VER: downEl?.focus(); 
+        switch (writeDir) {
+            case WriteDir.Ver: downEl?.focus(); 
                 break;
-            case HOR: rightEl?.focus(); 
+            case WriteDir.Hor: rightEl?.focus(); 
                 break;
         }           
     }
@@ -121,7 +115,7 @@
                         disabled={ disabled}                                                 
                         />        
                 {:else}
-                    <input disabled class='empty'/>
+                    <input disabled class='empty-cell'/>
                 {/if}
             </td> 
             {/each}
@@ -137,7 +131,7 @@
         background-color: greenyellow;
     }
 
-    .head-cell, .body-cell, .empty {
+    .head-cell, .body-cell, .empty-cell {
         width: 14px;
         height: 14px;
         font-size: 14px;
@@ -150,7 +144,7 @@
     .body-cell {
         border-width: 1px;
     }
-    .empty {
+    .empty-cell {
         border: none; 
         background-color: gainsboro;
     }
