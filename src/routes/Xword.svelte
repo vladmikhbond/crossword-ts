@@ -1,9 +1,8 @@
-<!-- field + highlight -->
+<!-- crossword + highlight -->
 
 <script lang="ts">
-    import type Crossword from "$lib/crossword";
+    import Crossword from "$lib/crossword";
     import {Used, EMPTY, Dir} from "$lib/classes";
-
 
     export let cw: Crossword; 
     export let highlight = '';
@@ -11,32 +10,50 @@
 
     let writeDir = Dir.None;  
 
-
-    /** Рядок для користувача з дефініцієй терміну */
-    function termDefinition(info: Used | null) 
-    { 
+    /** 
+     * Виробляє рядок з дефініцієй одного або двох термінів, який отримує коистувач. 
+     */
+    function termDefinition(info: Used | null): string 
+    {   
+        // в комірці слова не починаются
         if (!info) {
             return '';
         }
+        // в комірці починається одне слово
         let dir = info.dir === Dir.Hor ? 'Hor' : 'Ver';
         let def = `(${dir}) ${info.term.def}`;
-        if (info.term.def.indexOf('©') == -1) {
+        if (info.term.def.indexOf(Crossword.DIR_STUB) == -1) {
             return def;
         }
+        // в комірці починаються два слова
         let otherDir = info.dir === Dir.Ver ? 'Hor' : 'Ver'; 
-        return def.replace('©', otherDir);        
+        return def.replace(Crossword.DIR_STUB, otherDir);        
+    }
+  
+
+    function input_keyup(e: KeyboardEvent, r: number, c:number) {
+        if (e.key && e.key.length == 1) {
+            // Щоб зоставалося лише одна буква у полі вводу.
+            cw.field[r][c].char = e.key;
+        }
+        paintSolvedWord(r, c); 
+        moveFocusAfter(e, r, c);
     }
 
-
+    /**
+     * Зсуває фокус після вводу чегової літери.
+     */ 
     function moveFocusAfter(event: KeyboardEvent, r:number, c:number) 
     {
+        const rc2id = (r:number, c:number) => (r * 100 + c).toString();
+
         if (event.shiftKey || event.key == 'Backspace') 
             return;
 
-        let downEl = document.getElementById(((r + 1) * 100 + c) + "");
-        let upEl = document.getElementById(((r - 1) * 100 + c) + "");
-        let rightEl = document.getElementById((r * 100 + c + 1) + "");
-        let leftEl = document.getElementById((r * 100 + c - 1) + "");
+        let downEl = document.getElementById(rc2id(r+1, c));
+        let upEl = document.getElementById(rc2id(r-1, c));
+        let rightEl = document.getElementById(rc2id(r, c+1));
+        let leftEl = document.getElementById(rc2id(r, c-1));
 
         switch (event.key) {
             case 'ArrowUp':
@@ -76,7 +93,7 @@
     }
 
     
-	function assign_highlight(r:number, c:number) {
+	function define_highlight(r:number, c:number) {
         highlight = termDefinition(cw.field[r][c].info);
 	}
 
@@ -92,15 +109,7 @@
         })
     }
 
-    function input_keyup(e: KeyboardEvent, r: number, c:number) {
-        if (e.key && e.key.length == 1) {
-            // Щоб зоставалося лише одна буква у полі вводу.
-            cw.field[r][c].char = e.key;
-        }
-        paintSolvedWord(r, c); 
-        moveFocusAfter(e, r, c);
-    }
-       
+    
 </script>
 
 
@@ -114,7 +123,7 @@
                         id={(r * 100 + c).toString()}
                         bind:value='{cw.field[r][c].char}'
                         on:keyup={e => input_keyup(e, r, c)}  
-                        on:focus={() => assign_highlight(r, c)} 
+                        on:focus={() => define_highlight(r, c)} 
                         class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
                         title="{termDefinition(cw.field[r][c].info)}"

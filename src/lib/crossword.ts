@@ -5,8 +5,9 @@ import {shuffleArray} from './utils'
 /** Підтримує автоматичну побудову та вирішення кросворду користвачем. */
 class Crossword 
 {
-    static K = 3   // K * size = кількість спроб додавання слова в кросворд
-
+    private static K = 3   // K * size = кількість спроб додавання слова в кросворд
+    
+    static DIR_STUB = '\uffff';
     /** Терміни, використані для побудови к.*/
     useds: Used[] = [];   
     /** Кількість перетинів слів */ 
@@ -14,9 +15,9 @@ class Crossword
     /** Ігрове поле */ 
     field: Cell[][];
 
-    size;
-    terms;
-    regIgnore;
+    size: number;
+    terms: Term[];
+    regIgnore: boolean;
 
     /**
      * @param size - сторона квадратного поля к.
@@ -25,7 +26,7 @@ class Crossword
      */
     constructor(size: number, terms: Term[], regIgnore = true) {
         
-        function emptyField (size:number) {
+        function createEmptyField (size:number) {
             const field = new Array(size);
             for (let r = 0; r < size; r++) {
                 field[r] = new Array(size);
@@ -41,47 +42,16 @@ class Crossword
         this.terms = terms;
         this.regIgnore = regIgnore;
 
-        this.field = emptyField(size) 
+        this.field = createEmptyField(size) 
             
         shuffleArray(this.terms);
         this.buildCrossword();   
     }
 
 
-//#region  Epilog
-    
-    replaceLettersWithSpaces() {
-        for (let r = 0; r < this.size; r++) {
-            for (let c = 0; c < this.size; c++) {
-                if (this.field[r][c].char !== EMPTY) {
-                    this.field[r][c].char = '';
-                }
-            }
-        }
-    }
-
-    setInfoToCells() {
-        for (const used of this.useds) {
-            let cell = this.field[used.row][used.col];
-            if (!cell.info) 
-            {
-                // no info in the cell yet
-                cell.info = used;                    
-            } 
-            else 
-            {
-                // the cell already has one info
-                // let dir = used.dir == Dir.Hor ? Dir.Hor : Dir.Ver
-                cell.info.term.def += `\n(©) ` + used.term.def;
-            }
-        }
-    }
-
-//#endregion
-
 //#region Build Crossword
 
-    buildCrossword() 
+    private buildCrossword() 
     {
         let r = this.size / 2 |0;
         let c = (this.size - this.terms[0].word.length) / 2 |0;
@@ -98,24 +68,23 @@ class Crossword
         if (this.terms.length === 0)
            return;
 
-        // Find all the right places      
+        // Find all the suitable places      
         let places = [];
         let word = this.terms[0].word;
         for (let r = 0; r < this.size; r += 2) {
             for (let c = 0; c < this.size - word.length; c++) {
-                let e = this.estimate(word, r, c);
-                if (e > 0) {
-                    places.push({r, c, e})
+                let xs = this.estimate(word, r, c);
+                if (xs > 0) {
+                    places.push({r, c, xs})
                 }
             }
         }
         
-        // random select one of places
-
+        // Random select one of places
         if (places.length) {
             let i = Math.floor(Math.random() * places.length);
             this.useFirstTerm_n_Trans(places[i].r, places[i].c);
-            this.xCount += places[i].e;    
+            this.xCount += places[i].xs;    
         } else {
             // move a bad term to the end of this.terms
             this.terms.push(this.terms.shift()!)
@@ -123,13 +92,24 @@ class Crossword
     }
 
     
-    private estimate (word: string, r:number, c: number) 
+    private estimate (word: string, r: number, c: number) 
     {
-        // зліва і справа від слова має бути пусто
-        if (c > 0 && this.field[r][c - 1].char !== EMPTY)
-            return -1;
+        // зліва від слова має бути пусто
+        // if (c > 0 && this.field[r][c - 1].char !== EMPTY)
+        //     return -1;
+        // справа від слова має бути пусто
         if (c + 1 < this.size && this.field[r][c + 1].char !== EMPTY)
             return -1;
+           
+        for (let i = 0; i < word.length; i++) {
+            let cell = this.field[r][c + i];
+            // зверу до слова не має бути дотиків
+            if (cell.char === EMPTY && r > 0 && this.field[r - 1][c + i].char !== EMPTY)
+               return -1; 
+            // знизу до слова не має бути дотиків
+            if (cell.char === EMPTY && r < this.size - 1 && this.field[r + 1][c + i].char !== EMPTY)
+               return -1;       
+        }
 
         let xCount = 0;
         for (let i = 0; i < word.length; i++) {

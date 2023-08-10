@@ -4,11 +4,11 @@
     import {topics}  from '$lib/data'
  	import {Term} from "$lib/classes";
     import Storage from "$lib/storage";
-
     import Xword from "./Xword.svelte";
 
-      
-    let size = 10;
+    const INIT_SIZE = 15;
+    
+    let size = INIT_SIZE;
     let topic = topics[Storage.readTopicIdx()];
     /** @type {Crossword} */
     let cw: Crossword;
@@ -21,33 +21,34 @@
     function newButton_click() {
         if (size < 10 || size >= 100 ) {
             alert('Size grate then 10 and less then 100')
-            cw = new Crossword(size, [new Term('x', 'x')]);
+            cw = new Crossword(size, [new Term(' ', ' ')]);
             hl = ''
             return;
         }
         cw = getBestCrossword(topic, size);
         cw.regIgnore = regIgnore;
-
+        
+        // resume
         let [x, w] = [cw?.xCount, cw?.useds.length];
         hl = `${x} / ${w} = ${(x/w).toFixed(2)}`; 
         disabled = false;           
     }
 
+    /** Save the right answers to local storage and uncover field after thet*/
     function stopButton_click() {
-        // before
+        // save answers
         let wordsOk = cw.useds
             .filter(u => cw.isUsedOk(u))
             .map(u => u.term.word);
         Storage.saveTermsToStorage(topic, wordsOk);
 
-        // after
+        // uncover field
         cw.uncover();
         cw = cw;
         disabled = true;  
     }
 
-    /**
-	 */
+    /** Save a topic index to local storage */
     function select_change() {
         let topicIdx = topics.indexOf(topic);
         Storage.saveTopicIdx(topicIdx);

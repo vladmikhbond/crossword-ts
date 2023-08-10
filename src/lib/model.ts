@@ -1,6 +1,6 @@
 import Crossword from './crossword'
 import Storage from "$lib/storage";
-import type { Term } from './classes';
+import { Term, EMPTY } from './classes';
 
 const ATTEMPTS = 100;          // кількість кросвордів-кандидатів
 
@@ -28,8 +28,36 @@ export function getBestCrossword(topic: string, size: number) {
         }        
     }
     // epilog      
-    best.replaceLettersWithSpaces();
-    best.setInfoToCells();
+    replaceLettersWithSpaces(best);
+    setInfoToSomeCells(best);
 
     return best;            
+}
+
+
+function replaceLettersWithSpaces(cw: Crossword) 
+{
+    for (let r = 0; r < cw.size; r++) {
+        for (let c = 0; c < cw.size; c++) {
+            if (cw.field[r][c].char !== EMPTY) {
+                cw.field[r][c].char = '';
+            }
+        }
+    }
+}
+
+function setInfoToSomeCells(cw: Crossword)  {
+    for (const used of cw.useds) {
+        let cell = cw.field[used.row][used.col];
+        if (!cell.info) 
+        {
+            // no info in the cell yet
+            cell.info = used;                    
+        } 
+        else 
+        {
+            // the cell already has info
+            cell.info.term.def += `\n(${Crossword.DIR_STUB}) ` + used.term.def;
+        }
+    }
 }
