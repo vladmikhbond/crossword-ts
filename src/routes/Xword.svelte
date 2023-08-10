@@ -22,30 +22,23 @@
     }
 
 
-    // /**
-	//  * @param {number} r
-	//  * @param {number} c
-	//  * @param {KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement; }} event
-	//  */
-    function moveFocusAfter(r:number, c:number, event: KeyboardEvent) 
+    function moveFocusAfter(event: KeyboardEvent, r:number, c:number) 
     {
-        /////////////////// 
-        paintSolvedWord(r, c);
-        ///////////////////
 
         let downId = ((r + 1) * 100 + c).toString();
-        let downEl = document.getElementById(downId);
+        let downEl = document.getElementById(((r + 1) * 100 + c) + "");
 
         let upId = ((r - 1) * 100 + c).toString();
-        let upEl = document.getElementById(upId);
+        let upEl = document.getElementById(((r - 1) * 100 + c) + "");
 
         let rightId = (r * 100 + c + 1).toString();
-        let rightEl = document.getElementById(rightId);
+        let rightEl = document.getElementById((r * 100 + c + 1) + "");
 
         let leftId = (r * 100 + c - 1).toString();
-        let leftEl = document.getElementById(leftId);
+        let leftEl = document.getElementById((r * 100 + c - 1) + "");
 
-        if (event.shiftKey) return;
+        if (event.shiftKey || event.key == 'Backspace') 
+            return;
         switch (event.key) {
             case 'ArrowUp':
                 upEl?.focus()
@@ -80,14 +73,7 @@
         }           
     }
 
-    /**
-     * Щоб зоставалося лише одна буква у полі вводу.
-     */
-    function keypressHandler(this: HTMLInputElement) {
-        this.value = '';    
-    }
-
-
+    
 	function highlight(r:number, c:number) {
         hl = termDef(cw.field[r][c].info);
 	}
@@ -102,7 +88,18 @@
                 cw.field[r][c].solved = b;
             }            
         })
-     }
+    }
+
+    function input_keyup(e: KeyboardEvent, r: number, c:number) {
+        if (e.key.length == 1) {
+            // Щоб зоставалося лише одна буква у полі вводу.
+            cw.field[r][c].char = e.key;
+        }
+        paintSolvedWord(r, c); 
+        moveFocusAfter(e, r, c);
+    }
+    
+    
     
 </script>
 
@@ -116,8 +113,7 @@
                     <input 
                         id={(r * 100 + c).toString()}
                         bind:value='{cw.field[r][c].char}'
-                        on:keypress={keypressHandler}
-                        on:keyup={(e) => moveFocusAfter(r, c, e)}  
+                        on:keyup={e => input_keyup(e, r, c)}  
                         on:focus={() => highlight(r, c)} 
                         class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
