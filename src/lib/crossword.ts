@@ -103,7 +103,7 @@ class Crossword
            
         for (let i = 0; i < word.length; i++) {
             let cell = this.field[r][c + i];
-            // зверу до слова не має бути дотиків
+            // зверху до слова не має бути дотиків
             if (cell.char === EMPTY && r > 0 && this.field[r - 1][c + i].char !== EMPTY)
                return -1; 
             // знизу до слова не має бути дотиків
