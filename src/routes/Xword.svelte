@@ -51,7 +51,7 @@
     {
         const rc2id = (r:number, c:number) => (r * 100 + c).toString();
 
-        if (event.shiftKey || event.key == 'Backspace') 
+        if (event.shiftKey || event.key == 'Backspace' || event.key == 'Delete') 
             return;
 
         let downEl = document.getElementById(rc2id(r+1, c));

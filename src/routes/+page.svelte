@@ -10,7 +10,6 @@
     
     let size = INIT_SIZE;
     let topic = topics[Storage.readTopicIdx()];
-    /** @type {Crossword} */
     let cw: Crossword;
     let disabled = false;
     let hl = '';
