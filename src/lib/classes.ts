@@ -1,16 +1,13 @@
 import {data}  from './data'
 
 export const EMPTY = '.';
-export const HOR = 'h', VER = 'v';
-
 export enum Dir { None, Hor, Ver };
-
 
 export class Term {
 
-    word: string;
-    def: string;
-    freq: number;
+    word: string;   // слово
+    def: string;    // дефініція слова
+    freq: number;   // кількість вдалих відповідей (для збереження в лок.сховище)
 
     constructor(word: string, def: string, freq=0) {
         this.word = word;
@@ -23,7 +20,7 @@ export class Term {
 
         let lines = data[topic].split('\n');
         for (let line of lines) {
-            let [word, def] = line.split(' - ').map((/** @type {string} */ x) => x.trim());
+            let [word, def] = line.split(' - ').map(x => x.trim());
             if (word && def && word != '' && def != '') {
                 def = def[0].toUpperCase() + def.slice(1)
                 terms.push(new Term(word, def))
@@ -75,7 +72,6 @@ export class Used {
         }
         return arr;
     }
-
     
     contains(r: number, c: number) {
         const id = r * 100 + c;

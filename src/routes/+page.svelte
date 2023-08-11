@@ -27,10 +27,8 @@
         }
         cw = getBestCrossword(topic, size);
         cw.regIgnore = regIgnore;
-        
-        // resume
-        let [x, w] = [cw?.xCount, cw?.useds.length];
-        hl = `${x} / ${w} = ${(x/w).toFixed(2)}`; 
+        hl = `${topic} - ${cw?.useds.length}`; 
+
         disabled = false;           
     }
 
@@ -57,7 +55,7 @@
 
 </script>
 
-<div class="center-container">
+<div class:center-container = {disabled} class:unvisible = {!disabled} >
     <h3>
         Crossword on 
         <select bind:value={topic} on:change={select_change}>
@@ -70,10 +68,15 @@
 
     <p>
         <label title="size < 100">Size <input class="cw-size" bind:value={size} /></label>
-        <button on:click={ newButton_click } class="new-button">New</button>
-        <button on:click={ stopButton_click } class="stop-button">Stop</button> 
+        <button on:click={ newButton_click } class="new-button">New</button>       
     </p>
+</div>
+
+<div class="center-container">
     <Xword cw={cw} highlight={hl} disabled={disabled} />
+</div>
+<div class:center-container = {!disabled} class:unvisible = {disabled} >
+    <p> <button on:click={ stopButton_click } class="stop-button">Stop</button> </p>
 </div>
 
 <style>
@@ -81,6 +84,10 @@
         display: grid;
         place-items: center;
     }
+    .unvisible {
+        display: none;
+    }
+
     .cw-size {
         width: 24px;
     }
@@ -95,5 +102,6 @@
     option {
         font: 800;
     }
+
 
 </style>

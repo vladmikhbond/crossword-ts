@@ -9,6 +9,7 @@
     export let disabled = false;
 
     let writeDir = Dir.None;  
+    let hlWidth: number;     $: hlWidth = cw.size * 19 + 16;
 
     /** 
      * Виробляє рядок з дефініцієй одного або двох термінів, який отримує коистувач. 
@@ -31,13 +32,16 @@
     }
   
 
-    function input_keyup(e: KeyboardEvent, r: number, c:number) {
+    function input_keyup(e: KeyboardEvent, r: number, c:number) 
+    {
+        // Щоб зоставалося лише одна буква у полі вводу.
+        //       (чомусь не працює в моб браузерах)
         if (e.key && e.key.length == 1) {
-            // Щоб зоставалося лише одна буква у полі вводу.
             cw.field[r][c].char = e.key;
         }
+
         paintSolvedWord(r, c); 
-        moveFocusAfter(e, r, c);
+        moveFocusAfter(e, r, c); 
     }
 
     /**
@@ -97,7 +101,6 @@
         highlight = termDefinition(cw.field[r][c].info);
 	}
 
-
     function paintSolvedWord(r:number, c:number)  {
         let useds = cw.useds.filter(u => u.contains(r, c))
         useds.forEach( u => { 
@@ -107,9 +110,7 @@
                 cw.field[r][c].solved = b;
             }            
         })
-    }
-
-    
+    }    
 </script>
 
 
@@ -122,7 +123,7 @@
                     <input 
                         id={(r * 100 + c).toString()}
                         bind:value='{cw.field[r][c].char}'
-                        on:keyup={e => input_keyup(e, r, c)}  
+                        on:keyup={e => input_keyup(e, r, c)}                         
                         on:focus={() => define_highlight(r, c)} 
                         class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
@@ -138,7 +139,7 @@
     {/each}
 </table>
 
-<pre class="highlight">{highlight}</pre>
+<pre class="highlight" style="width: {hlWidth}px;">{highlight}</pre>
 
 
 <style>
@@ -175,7 +176,11 @@
     }
 
     .highlight {
+        display: grid;
+        place-items: center;
         margin-top: 10px;
-        height: 20px;
+        white-space: pre-wrap;
+        /* border: thin solid; */
+
     }
 </style>
