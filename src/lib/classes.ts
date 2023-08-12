@@ -41,13 +41,13 @@ export class Cell {
     char: string;
     dir: Dir;
     solved: boolean;
-    info: Used | null;
+    info: Used[];
 
     constructor(char = EMPTY, dir=Dir.Hor, solved=false) {
         this.char = char;
         this.dir = dir;
         this.solved = solved;
-        this.info = null;
+        this.info = [];
     }
 }
 

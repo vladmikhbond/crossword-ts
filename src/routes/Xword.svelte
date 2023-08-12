@@ -19,21 +19,9 @@
     /** 
      * Виробляє рядок з дефініцієй одного або двох термінів, який отримує коистувач. 
      */
-    function termDefinition(info: Used | null): string 
-    {   
-        // в комірці слова не починаются
-        if (!info) {
-            return '';
-        }
-        // в комірці починається одне слово
-        let dir = info.dir === Dir.Hor ? 'Hor' : 'Ver';
-        let def = `(${dir}) ${info.term.def}`;
-        if (info.term.def.indexOf(Crossword.DIR_STUB) == -1) {
-            return def;
-        }
-        // в комірці починаються два слова
-        let otherDir = info.dir === Dir.Ver ? 'Hor' : 'Ver'; 
-        return def.replace(Crossword.DIR_STUB, otherDir);        
+    function termDefinition(info: Used[]): string 
+    {    
+        return info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'}) ${u.term.def}`).join('\n');
     }
   
 
@@ -46,7 +34,6 @@
         moveFocusAfterInput(e, r, c); 
     }
     
-
 
     /**
      * Зсуває фокус після вводу літери.
@@ -128,7 +115,7 @@
                         bind:value='{cw.field[r][c].char}'
                         on:keyup={e => input_keyup(e, r, c)} 
                         on:focus={() => input_focus(r, c)} 
-                        class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
+                        class="{cw.field[r][c].info.length > 0 ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
                         />        
                 {:else}

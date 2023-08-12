@@ -51,15 +51,6 @@ function replaceLettersWithSpaces(cw: Crossword)
 function setInfoToSomeCells(cw: Crossword)  {
     for (const used of cw.useds) {
         let cell = cw.field[used.row][used.col];
-        if (!cell.info) 
-        {
-            // no info in the cell yet
-            cell.info = used;                    
-        } 
-        else 
-        {
-            // the cell already has info
-            cell.info.term.def += `\n(${Crossword.DIR_STUB}) ` + used.term.def;
-        }
+        cell.info.push(used);
     }
 }
