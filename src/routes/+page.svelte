@@ -13,8 +13,7 @@
     let cw: Crossword;
     let stopped = false;
     let hl = '';
-    let regIgnore = true;
-
+    
     newButton_click();
     
     function newButton_click() {
@@ -25,8 +24,8 @@
             return;
         }
         cw = getBestCrossword(topic, size);
-        cw.regIgnore = regIgnore;
-        hl = `${topic} - ${cw?.useds.length}`; 
+        cw.regIgnore = topic.slice(-1) === '_';
+        hl = `${topic} - ${cw?.useds.length}\n` + (cw.regIgnore ? 'Регістр не має значення' : ''); 
 
         stopped = false;           
     }
@@ -62,7 +61,6 @@
                 <option>{topic}</option>
             {/each}
         </select>
-        <input type="checkbox" bind:checked={regIgnore}  title = "Register is ignored"/>
     </h3> 
 
     <p>

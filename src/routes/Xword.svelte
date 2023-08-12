@@ -36,7 +36,7 @@
     function input_keyup(e: KeyboardEvent, r: number, c:number) 
     {
         // Щоб зоставалося лише одна буква у полі вводу.
-        cw.field[r][c].char = e.target.value.slice(-1); 
+        cw.field[r][c].char = (e.target as HTMLInputElement).value.slice(-1); 
         paintSolvedWord(r, c); 
         moveFocusAfter(e, r, c); 
     }
