@@ -12,6 +12,10 @@
     let hlWidth: number;     
     $: hlWidth = cw.size * 19 + 16;
 
+    const rc2id = (r:number, c:number) => (r * 100 + c).toString();
+    const id2rc = (id:number) => [id / 100 | 0, id % 100];
+
+    
     /** 
      * Виробляє рядок з дефініцієй одного або двох термінів, який отримує коистувач. 
      */
@@ -35,19 +39,21 @@
 
     function input_keyup(e: KeyboardEvent, r: number, c:number) 
     {
-        // Щоб зоставалося лише одна буква у полі вводу.
+        // Щоб зоставалося лише одна літера у полі вводу.
         cw.field[r][c].char = (e.target as HTMLInputElement).value.slice(-1); 
+
         paintSolvedWord(r, c); 
-        moveFocusAfter(e, r, c); 
+        moveFocusAfterInput(e, r, c); 
     }
+    
+
 
     /**
      * Зсуває фокус після вводу літери.
      */ 
-    function moveFocusAfter(event: KeyboardEvent, r:number, c:number) 
+    function moveFocusAfterInput(event: KeyboardEvent, r:number, c:number) 
     {
-        const rc2id = (r:number, c:number) => (r * 100 + c).toString();
-
+    
         if (event.shiftKey || event.key == 'Backspace' || event.key == 'Delete') 
             return;
 
@@ -94,17 +100,17 @@
     }
 
     
-	function define_highlight(r:number, c:number) {
+	function input_focus(r:number, c:number) {
         highlight = termDefinition(cw.field[r][c].info);
 	}
 
     function paintSolvedWord(r:number, c:number)  {
-        let useds = cw.useds.filter(u => u.contains(r, c))
+        let useds = cw.useds.filter(u => u.contains(r, c));
         useds.forEach( u => { 
-            let b = cw.isUsedOk(u);
+            let ok = cw.isUsedOk(u);
             for (let id of u.areal()) {
-                let [r, c] = [id / 100 | 0, id % 100];
-                cw.field[r][c].solved = b;
+                let [r, c] = id2rc(id);
+                cw.field[r][c].solved = ok;
             }            
         })
     }    
@@ -118,11 +124,10 @@
             <td>
                 {#if cw.field[r][c].char != EMPTY}
                     <input 
-                        id={(r * 100 + c).toString()}
+                        id={rc2id(r, c)}
                         bind:value='{cw.field[r][c].char}'
                         on:keyup={e => input_keyup(e, r, c)} 
-
-                        on:focus={() => define_highlight(r, c)} 
+                        on:focus={() => input_focus(r, c)} 
                         class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
                         />        

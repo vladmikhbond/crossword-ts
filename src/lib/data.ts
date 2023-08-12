@@ -1,7 +1,10 @@
 type Dictionary = {
     [topic: string]: string;
 };
-  
+
+/**
+ * Розділи, назви яких закінчуються на '_', будуть регістронезалежними.
+ */  
 export const data: Dictionary = {
     JavaScript: 
     `transpiler - перекладач з нової версії мови на стару версію
