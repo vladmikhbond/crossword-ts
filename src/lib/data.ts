@@ -202,25 +202,22 @@ export const data: Dictionary = {
     напередодні - намедни`,
 
     'Прапори_':
-    `Алжир - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Algeria.svg
-    Андорра - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Andorra.svg
-    Білорусь - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Belarus_(1918,_1991%E2%80%931995).svg
-    Бельгія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Belgium.svg
-    Болгарія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Bulgaria.svg    
-    Боснія_і_Герцеговина - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Bosnia_and_Herzegovina.svg
-    Великобританія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_the_United_Kingdom_(3-5).svg
-    Греція - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Greece.svg
-    Данія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Denmark.svg
-    Естонія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Estonia.svg
-    Ірландія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Ireland.svg
-    Ісландія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Iceland.svg
-    Іспанія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Spain.svg
-    Італія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Italy.svg
-    Латвія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Latvia.svg
-    Литва - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Lithuania.svg
-    Мальта - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Malta.svg`
+    `Андорра - https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Andorra.svg/1280px-Flag_of_Andorra.svg.png
+    Білорусь - https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Flag_of_Belarus_%281918%2C_1991%E2%80%931995%29.svg/1920px-Flag_of_Belarus_%281918%2C_1991%E2%80%931995%29.svg.png
+    Бельгія - https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Belgium.svg/1024px-Flag_of_Belgium.svg.png
+    Болгарія - https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Bulgaria.svg/1920px-Flag_of_Bulgaria.svg.png
+    Боснія_і_Герцеговина - https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Flag_of_Bosnia_and_Herzegovina.svg/1920px-Flag_of_Bosnia_and_Herzegovina.svg.png
+    Великобританія - https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg/1920px-Flag_of_the_United_Kingdom_%283-5%29.svg.png
+    Греція - https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/1280px-Flag_of_Greece.svg.png
+    Данія - https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Denmark.svg/1280px-Flag_of_Denmark.svg.png
+    Естонія - https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Flag_of_Estonia.svg/1280px-Flag_of_Estonia.svg.png
+    Ірландія - https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/1920px-Flag_of_Ireland.svg.png
+    Ісландія - https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Iceland.svg/1280px-Flag_of_Iceland.svg.png
+    Іспанія - https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/1280px-Flag_of_Spain.svg.png
+    Італія - https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1280px-Flag_of_Italy.svg.png
+    Латвія - https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Flag_of_Latvia.svg/1920px-Flag_of_Latvia.svg.png
+    Литва - https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Lithuania.svg/1920px-Flag_of_Lithuania.svg.png
+    Мальта - https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/1280px-Flag_of_Malta.svg.png`
 };
     
 export const topics = Object.keys(data);
-
-    

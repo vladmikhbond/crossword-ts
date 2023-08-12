@@ -1,7 +1,7 @@
 <!-- crossword + highlight -->
 
 <script lang="ts">
-    import Crossword from "$lib/crossword";
+    	import type Crossword from "$lib/crossword";
     import {Used, EMPTY, Dir} from "$lib/classes";
 
     export let cw: Crossword; 
@@ -16,15 +16,7 @@
     const id2rc = (id:number) => [id / 100 | 0, id % 100];
 
     
-    /** 
-     * Виробляє рядок з дефініцієй одного або двох термінів, який отримує коистувач. 
-     */
-    function termDefinition(info: Used[]): string 
-    {    
-        return info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'}) ${u.term.def}`).join('\n');
-    }
-  
-
+    
     function input_keyup(e: KeyboardEvent, r: number, c:number) 
     {
         // Щоб зоставалося лише одна літера у полі вводу.
@@ -86,10 +78,26 @@
         }           
     }
 
+    let hlUrl = '';
     
 	function input_focus(r:number, c:number) {
-        highlight = termDefinition(cw.field[r][c].info);
+        const info = cw.field[r][c].info;
+        highlight = '';
+        hlUrl = '';
+
+        if (info.length == 0) {
+            return;
+        }
+        
+        if (info[0].term.def.startsWith('Http')) {
+            highlight = info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'})`).join('        '); 
+            const sty = "style='width: 90px; height: 60px; border: solid 1px; display: inline;'"; 
+            hlUrl = info.map(u =>  `<img src='${u.term.def}' ${sty} />`).join('&nbsp&nbsp&nbsp');
+        } else {
+            highlight = info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'}) ${u.term.def}`).join('\n');
+        }
 	}
+
 
     function paintSolvedWord(r:number, c:number)  {
         let useds = cw.useds.filter(u => u.contains(r, c));
@@ -128,6 +136,12 @@
 </table>
 
 <pre class="highlight" style="width: {hlWidth}px;">{highlight}</pre>
+<div class="image-container">
+    {@html hlUrl}
+</div>
+
+
+
 
 
 <style>
@@ -160,7 +174,7 @@
         padding: 6px;
     }
     tr, td {
-         padding: 0px;
+        padding: 0px;
     }
 
     .highlight {
@@ -168,7 +182,9 @@
         place-items: center;
         margin-top: 10px;
         white-space: pre-wrap;
-        /* border: thin solid; */
-
     }
+    .image-container {
+       display: flex;
+    }
+
 </style>
