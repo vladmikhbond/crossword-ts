@@ -199,7 +199,26 @@ export const data: Dictionary = {
     нещодавно - недавно
     старовинний - старинный
     старий - старик
-    напередодні - намедни`
+    напередодні - намедни`,
+
+    'Прапори_':
+    `Алжир - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Algeria.svg
+    Андорра - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Andorra.svg
+    Білорусь - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Belarus_(1918,_1991%E2%80%931995).svg
+    Бельгія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Belgium.svg
+    Болгарія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Bulgaria.svg    
+    Боснія_і_Герцеговина - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Bosnia_and_Herzegovina.svg
+    Великобританія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_the_United_Kingdom_(3-5).svg
+    Греція - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Greece.svg
+    Данія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Denmark.svg
+    Естонія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Estonia.svg
+    Ірландія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Ireland.svg
+    Ісландія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Iceland.svg
+    Іспанія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Spain.svg
+    Італія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Italy.svg
+    Латвія - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Latvia.svg
+    Литва - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Lithuania.svg
+    Мальта - https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%BF%D0%BE%D1%80%D0%B8_%D0%BD%D0%B5%D0%B7%D0%B0%D0%BB%D0%B5%D0%B6%D0%BD%D0%B8%D1%85_%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%B2#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Malta.svg`
 };
     
 export const topics = Object.keys(data);
