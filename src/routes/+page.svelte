@@ -11,7 +11,7 @@
     let size = INIT_SIZE;
     let topic = topics[Storage.readTopicIdx()];
     let cw: Crossword;
-    let disabled = false;
+    let stopped = false;
     let hl = '';
     let regIgnore = true;
 
@@ -28,7 +28,7 @@
         cw.regIgnore = regIgnore;
         hl = `${topic} - ${cw?.useds.length}`; 
 
-        disabled = false;           
+        stopped = false;           
     }
 
     /** Save the right answers to local storage and uncover field after thet*/
@@ -42,7 +42,7 @@
         // uncover field
         cw.uncover();
         cw = cw;
-        disabled = true;  
+        stopped = true;  
     }
 
     /** Save a topic index to local storage */
@@ -54,7 +54,7 @@
 
 </script>
 
-<div class:center-container = {disabled} class:unvisible = {!disabled} >
+<div class:center-container = {stopped} class:unvisible = {!stopped} >
     <h3>
         Crossword on 
         <select bind:value={topic} on:change={select_change}>
@@ -72,9 +72,9 @@
 </div>
 
 <div class="center-container">
-    <Xword cw={cw} highlight={hl} disabled={disabled} />
+    <Xword cw={cw} highlight={hl} stopped={stopped} />
 </div>
-<div class:center-container = {!disabled} class:unvisible = {disabled} >
+<div class:center-container = {!stopped} class:unvisible = {stopped} >
     <p> <button on:click={ stopButton_click } class="stop-button">Stop</button> </p>
 </div>
 

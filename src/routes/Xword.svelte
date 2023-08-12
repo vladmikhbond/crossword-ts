@@ -6,10 +6,11 @@
 
     export let cw: Crossword; 
     export let highlight = '';
-    export let disabled = false;
+    export let stopped = false;
 
     let writeDir = Dir.None;  
-    let hlWidth: number;     $: hlWidth = cw.size * 19 + 16;
+    let hlWidth: number;     
+    $: hlWidth = cw.size * 19 + 16;
 
     /** 
      * Виробляє рядок з дефініцієй одного або двох термінів, який отримує коистувач. 
@@ -35,17 +36,13 @@
     function input_keyup(e: KeyboardEvent, r: number, c:number) 
     {
         // Щоб зоставалося лише одна буква у полі вводу.
-        //       (чомусь не працює в моб браузерах)
-        if (e.key && e.key.length == 1) {
-            cw.field[r][c].char = e.key;
-        }
-
+        cw.field[r][c].char = e.target.value.slice(-1); 
         paintSolvedWord(r, c); 
         moveFocusAfter(e, r, c); 
     }
 
     /**
-     * Зсуває фокус після вводу чегової літери.
+     * Зсуває фокус після вводу літери.
      */ 
     function moveFocusAfter(event: KeyboardEvent, r:number, c:number) 
     {
@@ -123,12 +120,11 @@
                     <input 
                         id={(r * 100 + c).toString()}
                         bind:value='{cw.field[r][c].char}'
-                        on:keyup={e => input_keyup(e, r, c)}                         
+                        on:keyup={e => input_keyup(e, r, c)} 
+
                         on:focus={() => define_highlight(r, c)} 
                         class="{cw.field[r][c].info ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
-                        title="{termDefinition(cw.field[r][c].info)}"
-                        disabled={ disabled}                                                 
                         />        
                 {:else}
                     <input disabled class='empty-cell'/>

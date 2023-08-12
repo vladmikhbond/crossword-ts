@@ -1,4 +1,4 @@
-import {data}  from './data'
+import {data, topics}  from './data'
 
 export const EMPTY = '.';
 export enum Dir { None, Hor, Ver };
@@ -16,6 +16,10 @@ export class Term {
     }
 
     static loadData(topic: string) {
+        if (!data[topic]) {
+           topic = topics[0];
+        }
+
         let terms = [];
 
         let lines = data[topic].split('\n');
