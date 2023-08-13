@@ -17,43 +17,29 @@
     const id2rc = (id:number) => [id / 100 | 0, id % 100];
 
 
-    function input_keyup(e: KeyboardEvent, r: number, c:number) 
+    function input_input(e: { data: string }, r: number, c:number) 
     {
-        // Щоб зоставалося лише одна літера у полі вводу.
-        cw.field[r][c].char = (e.target as HTMLInputElement).value.slice(-1); 
+        // Щоб зоставалося лише одна літера у полі вводу.       
+        if (e.data?.length == 1) {
+            cw.field[r][c].char = e.data;
+        } else if (e.data?.length == 2){
+            let pos = e.data?.indexOf(cw.field[r][c].char);
+            cw.field[r][c].char = e.data[1 - pos]; 
+        }
 
+        if (cw.field[r][c].char != '') {
+            moveFocusAfterInput(r, c); 
+        }
         paintSolvedWord(r, c); 
-        moveFocusAfterInput(e, r, c); 
     }
     
 
     /** Зсуває фокус після вводу літери. */ 
     //
-    function moveFocusAfterInput(event: KeyboardEvent, r:number, c:number) 
+    function moveFocusAfterInput(r:number, c:number) 
     {
-    
-        if (event.shiftKey || event.key == 'Backspace' || event.key == 'Delete') 
-            return;
-
         let downEl = document.getElementById(rc2id(r+1, c));
-        let upEl = document.getElementById(rc2id(r-1, c));
         let rightEl = document.getElementById(rc2id(r, c+1));
-        let leftEl = document.getElementById(rc2id(r, c-1));
-
-        switch (event.key) {
-            case 'ArrowUp':
-                upEl?.focus()
-                return;
-            case 'ArrowLeft':
-                leftEl?.focus()
-                return;
-            case 'ArrowDown':
-                downEl?.focus()
-                return;
-            case 'ArrowRight':
-                rightEl?.focus()
-                return;
-        }
 
         if (downEl && rightEl) {
             if (cw.field[r+1][c].char === EMPTY && cw.field[r][c+1].char !== EMPTY) {
@@ -128,8 +114,8 @@
                     <input 
                         id={rc2id(r, c)}
                         bind:value='{cw.field[r][c].char}'
-                        on:keyup={e => input_keyup(e, r, c)} 
-                        on:focus={(e) => input_focus(e, r, c)} 
+                        on:input={e => input_input(e, r, c)} 
+                        on:focus={e => input_focus(e, r, c)} 
                         class="{cw.field[r][c].info.length > 0 ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
                         />        
