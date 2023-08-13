@@ -6,7 +6,7 @@ type Dictionary = {
  * Розділи, назви яких закінчуються на '_', будуть регістронезалежними.
  */  
 export const data: Dictionary = {
-    JavaScript: 
+    JavaScript_: 
     `transpiler - перекладач з нової версії мови на стару версію
     polyphile - бібліотека, яка додає функції, відсутні у цільовій версії стандарту
     typeof - Операція визначення типу
@@ -80,7 +80,7 @@ export const data: Dictionary = {
     create - метод Object, який створює об'єкт із заданим прототипом
     constructor - посилання на конструктор, що створив об'єкт (властивість об'єкту)`,
      
-    Python: 
+    Python_: 
     `Guido - ім'я атора мови Python
     PyCharm - професійна IDE компанії JetBrains
     int - тип цілих чисел
@@ -111,7 +111,7 @@ export const data: Dictionary = {
     global - ключове слово, що відзначає імена глобальних об'єктів
     nonlocal - ключове слово, що відзначає імена нелокальних об'єктів`,
 
-    EuroCapitals_:
+    EuroCapitals:
     `Відень - Австрія
     Брюссель - Бельгія
     Амстердам - Нідерланди
@@ -152,7 +152,7 @@ export const data: Dictionary = {
     Прага - Чехія`,
     
 
-    'Часи і дні_':
+    'Часи і дні':
     `січень - январь
     лютий - февраль
     березень - март
@@ -201,7 +201,7 @@ export const data: Dictionary = {
     старий - старик
     напередодні - намедни`,
 
-    'Прапори_':
+    'Прапори':
     `Андорра - https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Andorra.svg/1280px-Flag_of_Andorra.svg.png
     Білорусь - https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Flag_of_Belarus_%281918%2C_1991%E2%80%931995%29.svg/1920px-Flag_of_Belarus_%281918%2C_1991%E2%80%931995%29.svg.png
     Бельгія - https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Belgium.svg/1024px-Flag_of_Belgium.svg.png
@@ -217,7 +217,24 @@ export const data: Dictionary = {
     Італія - https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1280px-Flag_of_Italy.svg.png
     Латвія - https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Flag_of_Latvia.svg/1920px-Flag_of_Latvia.svg.png
     Литва - https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Lithuania.svg/1920px-Flag_of_Lithuania.svg.png
-    Мальта - https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/1280px-Flag_of_Malta.svg.png`
+    Мальта - https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/1280px-Flag_of_Malta.svg.png`,
+
+    'Викладачі 1курс':
+    `ДударЗВ - https://software.nure.ua/wp-content/uploads/2021/04/dudar-zoya-volodimirivna.png
+    ЄрохінAЛ - https://software.nure.ua/wp-content/uploads/2021/04/yerohin-andrij-leonidovich.png
+    БілоусНВ - https://software.nure.ua/wp-content/uploads/2021/04/bilous-nataliya-valentinivna.png
+    БондарєвВМ - https://software.nure.ua/wp-content/uploads/2021/04/bondaryev-volodimir-mihajlovich.png
+    ЛитвинOГ - https://nure.ua/wp-content/uploads/Employees_photo/LitvinAG-135x180.jpg
+    МанчинськаНБ - https://nure.ua/wp-content/uploads/Employees_photo/Manchinskaya.jpg
+
+    ТерещенкоГЮ - https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=7eiV2qMAAAAJ&citpid=1
+    СаманцовОО - https://software.nure.ua/wp-content/uploads/2020/12/Samanczov_Oleksandr-Copy.jpg
+    ЧерепановаЮЮ - https://software.nure.ua/wp-content/uploads/2021/04/cherepanova.jpg
+    ЗибінаКВ - https://software.nure.ua/wp-content/uploads/2020/12/Zybina_KV.jpg
+    АгекянІА - https://software.nure.ua/wp-content/uploads/2020/12/AgekianI.jpg
+    
+
+    `
 };
     
 export const topics = Object.keys(data);

@@ -1,6 +1,6 @@
 import {data, topics}  from './data'
 
-export const EMPTY = '.';
+export const EMPTY = '\uffff';
 export enum Dir { None, Hor, Ver };
 
 export class Term {

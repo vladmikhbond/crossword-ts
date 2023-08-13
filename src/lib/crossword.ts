@@ -7,7 +7,6 @@ class Crossword
 {
     private static K = 3   // K * size = кількість спроб додавання слова в кросворд
     
-    static DIR_STUB = '\uffff';
     /** Терміни, використані для побудови к.*/
     useds: Used[] = [];   
     /** Кількість перетинів слів */ 

@@ -11,7 +11,7 @@
     let hlWidth: number;     
     $: hlWidth = cw.size * 19 + 16;
     let hlUrl = '';
-
+    $: hlUrl = cw !== null ? '' : '';
 
     const rc2id = (r:number, c:number) => (r * 100 + c).toString();
     const id2rc = (id:number) => [id / 100 | 0, id % 100];
@@ -177,5 +177,7 @@
     }
     .image-container {
        display: flex;
+       background-color: gainsboro;
+       padding: 10px;
     }
 </style>

@@ -24,7 +24,7 @@
             return;
         }
         cw = getBestCrossword(topic, size);
-        cw.regIgnore = topic.slice(-1) === '_';
+        cw.regIgnore = topic.slice(-1) !== '_';
         hl = `${topic} - ${cw?.useds.length}\n` + (cw.regIgnore ? 'Регістр не має значення' : ''); 
 
         stopped = false;           
