@@ -11,12 +11,13 @@
     let writeDir = Dir.None;  
     let hlWidth: number;     
     $: hlWidth = cw.size * 19 + 16;
+    let hlUrl = '';
+
 
     const rc2id = (r:number, c:number) => (r * 100 + c).toString();
     const id2rc = (id:number) => [id / 100 | 0, id % 100];
 
-    
-    
+
     function input_keyup(e: KeyboardEvent, r: number, c:number) 
     {
         // Щоб зоставалося лише одна літера у полі вводу.
@@ -27,9 +28,8 @@
     }
     
 
-    /**
-     * Зсуває фокус після вводу літери.
-     */ 
+    /** Зсуває фокус після вводу літери. */ 
+    //
     function moveFocusAfterInput(event: KeyboardEvent, r:number, c:number) 
     {
     
@@ -78,22 +78,30 @@
         }           
     }
 
-    let hlUrl = '';
-    
-	function input_focus(r:number, c:number) {
+
+	function input_focus(event: FocusEvent, r:number, c:number) 
+    {
+        // set caret
+        const inputElement = event.target as HTMLInputElement;
+        inputElement.selectionStart = inputElement.value.length;
+        inputElement.selectionEnd = inputElement.value.length;
+
+        // calc highlight & hlUrl
         const info = cw.field[r][c].info;
         highlight = '';
         hlUrl = '';
-
         if (info.length == 0) {
+            // nothing
             return;
         }
         
         if (info[0].term.def.startsWith('Http')) {
+            // images 
             highlight = info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'})`).join('        '); 
-            const sty = "style='width: 100px; height: 100px; object-fit: contain; background-color: gainsboro;'"; 
-            hlUrl = info.map(u =>  `<img src='${u.term.def}' ${sty} />`).join('&nbsp&nbsp&nbsp');
+            const styleStr = "style='width: 100px; height: 100px; object-fit: contain; background-color: gainsboro;'"; 
+            hlUrl = info.map(u =>  `<img src='${u.term.def}' ${styleStr} />`).join('&nbsp&nbsp&nbsp');
         } else {
+            // text
             highlight = info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'}) ${u.term.def}`).join('\n');
         }
 	}
@@ -122,7 +130,7 @@
                         id={rc2id(r, c)}
                         bind:value='{cw.field[r][c].char}'
                         on:keyup={e => input_keyup(e, r, c)} 
-                        on:focus={() => input_focus(r, c)} 
+                        on:focus={(e) => input_focus(e, r, c)} 
                         class="{cw.field[r][c].info.length > 0 ? 'head-cell' :'body-cell'}"
                         class:solved={cw.field[r][c].solved}
                         />        
@@ -139,7 +147,6 @@
 <div class="image-container">
     {@html hlUrl}
 </div>
-
 
 
 
@@ -186,6 +193,4 @@
     .image-container {
        display: flex;
     }
-
-
 </style>
