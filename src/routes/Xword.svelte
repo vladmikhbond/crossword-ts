@@ -91,7 +91,7 @@
         
         if (info[0].term.def.startsWith('Http')) {
             highlight = info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'})`).join('        '); 
-            const sty = "style='width: 100px; height: 100px; border: solid 1px; object-fit: contain; background-color: gainsboro;'"; 
+            const sty = "style='width: 100px; height: 100px; object-fit: contain; background-color: gainsboro;'"; 
             hlUrl = info.map(u =>  `<img src='${u.term.def}' ${sty} />`).join('&nbsp&nbsp&nbsp');
         } else {
             highlight = info.map(u => `(${u.dir == Dir.Hor ? 'Hor':'Ver'}) ${u.term.def}`).join('\n');
