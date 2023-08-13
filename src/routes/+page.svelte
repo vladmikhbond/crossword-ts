@@ -53,6 +53,7 @@
 
 </script>
 
+
 <div class:center-container = {stopped} class:unvisible = {!stopped} >
     <h3>
         Crossword on 
@@ -70,7 +71,7 @@
 </div>
 
 <div class="center-container">
-    <Xword cw={cw} highlight={hl} stopped={stopped} />
+    <Xword cw={cw} highlight={hl} />
 </div>
 <div class:center-container = {!stopped} class:unvisible = {stopped} >
     <p> <button on:click={ stopButton_click } class="stop-button">Stop</button> </p>

@@ -1,12 +1,11 @@
 <!-- crossword + highlight -->
 
 <script lang="ts">
-    	import type Crossword from "$lib/crossword";
-    import {Used, EMPTY, Dir} from "$lib/classes";
+    import type Crossword from "$lib/crossword";
+    import {EMPTY, Dir} from "$lib/classes";
 
     export let cw: Crossword; 
     export let highlight = '';
-    export let stopped = false;
 
     let writeDir = Dir.None;  
     let hlWidth: number;     
