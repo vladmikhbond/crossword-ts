@@ -57,8 +57,8 @@
     <h3>
         Crossword on 
         <select bind:value={topicKey} on:change={select_change}>
-            {#each topics as topic}
-                <option>{topic}</option>
+            {#each topics as key}
+                <option>{key}</option>
             {/each}
         </select>
     </h3> 
@@ -67,6 +67,8 @@
         <label title="size < 100">Size <input class="cw-size" bind:value={size} /></label>
         <button on:click={ newButton_click } class="new-button">New</button>       
     </p>
+{:else}
+    <span>{topicKey} <small> (регістр {cw?.regIgnore ? 'не ' : '' }має значення)</small> </span>
 {/if}
 
 <Xword cw={cw} info={info} />
