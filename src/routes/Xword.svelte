@@ -70,7 +70,9 @@
         inputElement.selectionStart = inputElement.value.length;
         inputElement.selectionEnd = inputElement.value.length;
         //
-        info = cw!.field[r][c].info;
+        if (cw!.field[r][c].info.length > 0) {
+            info = cw!.field[r][c].info;
+        }
 	}
 
 
@@ -78,9 +80,13 @@
         let useds = cw!.useds.filter(u => u.contains(r, c));
         useds.forEach( u => { 
             let ok = cw!.isUsedOk(u);
+            let i = 0;
             for (let id of u.areal()) {
                 let [r, c] = id2rc(id);
-                cw!.field[r][c].solved = ok;
+                if (ok) {
+                    cw!.field[r][c].solved = true;
+                    cw!.field[r][c].char = u.term.word[i++];
+                }
             }            
         })
     }    

@@ -12,7 +12,8 @@ const ATTEMPTS = 100;          // кількість кросвордів-кан
  */
 export function getBestCrossword(topicKey: string, size: number) {
     
-    let rIgno = data[topicKey].rIgno;
+    const rIgno = data[topicKey].rIgno;
+    const auto = data[topicKey].auto;
 
     // load terms from local storage
     let allTerms = Storage
@@ -24,10 +25,10 @@ export function getBestCrossword(topicKey: string, size: number) {
     
     let terms = allTerms.slice(0, n);
 
-    let best = new Crossword(size, terms, rIgno);
+    let best = new Crossword(size, terms, rIgno, auto);
     for (let i = 0; i < ATTEMPTS && best.useds.length < size ; i++) {
         terms = allTerms.slice(0, n);
-        let next = new Crossword(size, terms, rIgno);
+        let next = new Crossword(size, terms, rIgno, auto);
         if (next.useds.length > best.useds.length) {
             best = next;             
         }        

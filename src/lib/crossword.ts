@@ -17,13 +17,15 @@ class Crossword
     size: number;
     terms: Term[];
     regIgnore: boolean;
+    auto: number;
 
     /**
      * @param size - сторона квадратного поля к.
      * @param terms - терміни-кандидати, з яких збудують к.
      * @param regIgnore - флаг, чи враховувати регістр літер при перевірці
+     * @param auto - скільки літер на початку слова достатньо для автозаповнення
      */
-    constructor(size: number, terms: Term[], regIgnore = true) {
+    constructor(size: number, terms: Term[], regIgnore = true, auto = Infinity) {
         
         function createEmptyField (size:number) {
             const field = new Array(size);
@@ -40,6 +42,7 @@ class Crossword
         this.size = size;
         this.terms = terms;
         this.regIgnore = regIgnore;
+        this.auto = auto;
 
         this.field = createEmptyField(size) 
             
@@ -215,7 +218,7 @@ class Crossword
 
     isUsedOk(used: Used): boolean {
         const word = this.regIgnore ? used.term.word.toLowerCase() : used.term.word;
-        return word === this.getUserWord(used)
+        return word.slice(0, this.auto) === this.getUserWord(used).slice(0, this.auto)
     }
 
 }
