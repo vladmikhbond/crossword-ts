@@ -1,7 +1,7 @@
-import {data, topics}  from './data'
-
 export const EMPTY = '\uffff';
 export enum Dir { None, Hor, Ver };
+
+
 
 export class Term {
 
@@ -15,26 +15,8 @@ export class Term {
         this.freq = freq;
     }
 
-    static loadTopic(key: string) {
-        if (!data[key]) {
-           key = topics[0];
-        }
-
-        let terms = [];
-
-        let lines = data[key].terms.split('\n');
-        for (let line of lines) {
-            let [word, def] = line.split(' - ').map(x => x.trim());
-            if (word && def && word != '' && def != '') {
-                def = def[0].toUpperCase() + def.slice(1)
-                terms.push(new Term(word, def))
-            } else {
-                console.error('DATA ERROR:', line);
-            }
-        }
-        return {terms, topic: data[key]}; 
-    }
 }
+
 
 export class Cell {
 

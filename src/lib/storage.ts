@@ -1,19 +1,37 @@
 import { browser } from '$app/environment';
 import { Term } from './classes'
+import { data } from '$lib/data'
 
 const TOPIC_INDEX_KEY = 'topicIdx';
 
 export default class Storage 
 {
-    static readTerms(topic: string) 
+    private static getTopicTerms(key: string) {
+        let terms = [];
+    
+        let lines = data[key].terms.split('\n');
+        for (let line of lines) {
+            let [word, def] = line.split(' - ').map(x => x.trim());
+            if (word && def && word != '' && def != '') {
+                def = def[0].toUpperCase() + def.slice(1)
+                terms.push(new Term(word, def))
+            } else {
+                console.error('DATA ERROR:', line);
+            }
+        }
+        return terms;
+    }
+    
+
+    static readTerms(topicKey: string) 
     {
         if (browser) {
-            let jsonString = window.localStorage.getItem(topic);
+            let jsonString = window.localStorage.getItem(topicKey);
             if (jsonString) {
                 return JSON.parse(jsonString);
             }    
         }   
-        return Term.loadTopic(topic).terms;
+        return Storage.getTopicTerms(topicKey);
     }
 
 

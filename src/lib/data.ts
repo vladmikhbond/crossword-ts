@@ -1,11 +1,9 @@
-type Dictionary = {
-    [topic: string]: {rIgno: boolean, auto: number, terms: string }
-};
+type Topic = {rIgno: boolean, auto: number, terms: string };
 
 /**
  * Розділи, назви яких закінчуються на '_', будуть регістронезалежними.
  */  
-export const data: Dictionary = 
+export const data: {[key: string]: Topic} = 
 {
     JavaScript: {rIgno: false, auto: 3, terms: 
     `transpiler - перекладач з нової версії мови на стару версію
