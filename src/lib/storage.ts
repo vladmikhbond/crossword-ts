@@ -1,28 +1,11 @@
 import { browser } from '$app/environment';
-import { Term } from './classes'
-import { data } from '$lib/data'
+
+import { getTopicTerms } from '$lib/data'
 
 const TOPIC_INDEX_KEY = 'topicIdx';
 
 export default class Storage 
 {
-    private static getTopicTerms(key: string) {
-        let terms = [];
-    
-        let lines = data[key].terms.split('\n');
-        for (let line of lines) {
-            let [word, def] = line.split(' - ').map(x => x.trim());
-            if (word && def && word != '' && def != '') {
-                def = def[0].toUpperCase() + def.slice(1)
-                terms.push(new Term(word, def))
-            } else {
-                console.error('DATA ERROR:', line);
-            }
-        }
-        return terms;
-    }
-    
-
     static readTerms(topicKey: string) 
     {
         if (browser) {
@@ -31,7 +14,7 @@ export default class Storage
                 return JSON.parse(jsonString);
             }    
         }   
-        return Storage.getTopicTerms(topicKey);
+        return getTopicTerms(topicKey);
     }
 
 

@@ -1,7 +1,9 @@
+import { Term } from './classes'
+
 type Topic = {rIgno: boolean, auto: number, terms: string };
 
 /**
- * Розділи, назви яких закінчуються на '_', будуть регістронезалежними.
+ * 
  */  
 export const data: {[key: string]: Topic} = 
 {
@@ -244,3 +246,19 @@ export const data: {[key: string]: Topic} =
 
     
 export const topics = Object.keys(data);
+
+export function getTopicTerms(key: string) {
+    let terms = [];
+
+    let lines = data[key].terms.split('\n');
+    for (let line of lines) {
+        let [word, def] = line.split(' - ').map(x => x.trim());
+        if (word && def && word != '' && def != '') {
+            def = def[0].toUpperCase() + def.slice(1)
+            terms.push(new Term(word, def))
+        } else {
+            console.error('DATA ERROR:', line);
+        }
+    }
+    return terms;
+}
