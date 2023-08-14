@@ -9,7 +9,7 @@
     const INIT_SIZE = 15;
     
     let size = INIT_SIZE;
-    let topic = topics[Storage.readTopicIdx()];
+    let topicKey = topics[Storage.readTopicIdx()];
     let cw: Crossword;
     let stopped = false;
     let hl = '';
@@ -23,9 +23,9 @@
             hl = ''
             return;
         }
-        cw = getBestCrossword(topic, size);
-        cw.regIgnore = topic.slice(-1) !== '_';
-        hl = `${topic} - ${cw?.useds.length}\n` + (cw.regIgnore ? 'Регістр не має значення' : ''); 
+        cw = getBestCrossword(topicKey, size);
+        cw.regIgnore = topicKey.slice(-1) !== '_';
+        hl = `${topicKey} - ${cw?.useds.length}\n` + (cw.regIgnore ? 'Регістр не має значення' : ''); 
 
         stopped = false;           
     }
@@ -36,7 +36,7 @@
         let wordsOk = cw.useds
             .filter(u => cw.isUsedOk(u))
             .map(u => u.term.word);
-        Storage.saveTermsToStorage(topic, wordsOk);
+        Storage.saveTermsToStorage(topicKey, wordsOk);
 
         // uncover field
         cw.uncover();
@@ -46,7 +46,7 @@
 
     /** Save a topic index to local storage */
     function select_change() {
-        let topicIdx = topics.indexOf(topic);
+        let topicIdx = topics.indexOf(topicKey);
         Storage.saveTopicIdx(topicIdx);
         newButton_click();
     }
@@ -57,7 +57,7 @@
 <div class:center-container = {stopped} class:unvisible = {!stopped} >
     <h3>
         Crossword on 
-        <select bind:value={topic} on:change={select_change}>
+        <select bind:value={topicKey} on:change={select_change}>
             {#each topics as topic}
                 <option>{topic}</option>
             {/each}

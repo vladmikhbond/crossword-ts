@@ -1,12 +1,13 @@
 type Dictionary = {
-    [topic: string]: string;
+    [topic: string]: {rIgno: boolean, auto: number, terms: string }
 };
 
 /**
  * Розділи, назви яких закінчуються на '_', будуть регістронезалежними.
  */  
-export const data: Dictionary = {
-    JavaScript_: 
+export const data: Dictionary = 
+{
+    JavaScript: {rIgno: false, auto: 3, terms: 
     `transpiler - перекладач з нової версії мови на стару версію
     polyphile - бібліотека, яка додає функції, відсутні у цільовій версії стандарту
     typeof - Операція визначення типу
@@ -78,9 +79,10 @@ export const data: Dictionary = {
     prototype - посилання на прототип (властивість функції)
     __proto__ - посилання на прототип (властивість об'єкту)
     create - метод Object, який створює об'єкт із заданим прототипом
-    constructor - посилання на конструктор, що створив об'єкт (властивість об'єкту)`,
+    constructor - посилання на конструктор, що створив об'єкт (властивість об'єкту)`
+},
      
-    Python_: 
+    Python: {rIgno: false, auto: 3, terms: 
     `Guido - ім'я атора мови Python
     PyCharm - професійна IDE компанії JetBrains
     int - тип цілих чисел
@@ -109,9 +111,10 @@ export const data: Dictionary = {
     built-in - найбільш загальна область видимості (згідно із LEGB Rule)
     local - найменш загальна область видимості (згідно із LEGB Rule)
     global - ключове слово, що відзначає імена глобальних об'єктів
-    nonlocal - ключове слово, що відзначає імена нелокальних об'єктів`,
+    nonlocal - ключове слово, що відзначає імена нелокальних об'єктів`
+},
 
-    EuroCapitals:
+    EuroCapitals: {rIgno: true, auto: 3, terms: 
     `Відень - Австрія
     Брюссель - Бельгія
     Амстердам - Нідерланди
@@ -149,10 +152,10 @@ export const data: Dictionary = {
     Братислава - Словакія
     Будапешт - Угорщина
     Київ - Україна
-    Прага - Чехія`,
+    Прага - Чехія`
+},
     
-
-    'Часи і дні':
+    'Часи і дні': {rIgno: true, auto: 3, terms: 
     `січень - январь
     лютий - февраль
     березень - март
@@ -199,9 +202,10 @@ export const data: Dictionary = {
     нещодавно - недавно
     старовинний - старинный
     старий - старик
-    напередодні - намедни`,
+    напередодні - намедни`
+},
 
-    'Прапори':
+    'Прапори': {rIgno: true, auto: 3, terms: 
     `Андорра - https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Andorra.svg/1280px-Flag_of_Andorra.svg.png
     Білорусь - https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Flag_of_Belarus_%281918%2C_1991%E2%80%931995%29.svg/1920px-Flag_of_Belarus_%281918%2C_1991%E2%80%931995%29.svg.png
     Бельгія - https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Belgium.svg/1024px-Flag_of_Belgium.svg.png
@@ -217,9 +221,10 @@ export const data: Dictionary = {
     Італія - https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1280px-Flag_of_Italy.svg.png
     Латвія - https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Flag_of_Latvia.svg/1920px-Flag_of_Latvia.svg.png
     Литва - https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Lithuania.svg/1920px-Flag_of_Lithuania.svg.png
-    Мальта - https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/1280px-Flag_of_Malta.svg.png`,
+    Мальта - https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/1280px-Flag_of_Malta.svg.png`
+},
 
-    'Викладачі 1курс':
+    'Викладачі 1курс': {rIgno: true, auto: 3, terms: 
     `ДударЗВ - https://software.nure.ua/wp-content/uploads/2021/04/dudar-zoya-volodimirivna.png
     ЄрохінAЛ - https://software.nure.ua/wp-content/uploads/2021/04/yerohin-andrij-leonidovich.png
     БілоусНВ - https://software.nure.ua/wp-content/uploads/2021/04/bilous-nataliya-valentinivna.png
@@ -231,10 +236,13 @@ export const data: Dictionary = {
     СаманцовОО - https://software.nure.ua/wp-content/uploads/2020/12/Samanczov_Oleksandr-Copy.jpg
     ЧерепановаЮЮ - https://software.nure.ua/wp-content/uploads/2021/04/cherepanova.jpg
     ЗибінаКВ - https://software.nure.ua/wp-content/uploads/2020/12/Zybina_KV.jpg
-    АгекянІА - https://software.nure.ua/wp-content/uploads/2020/12/AgekianI.jpg
-    
+    АгекянІА - https://software.nure.ua/wp-content/uploads/2020/12/AgekianI.jpg`
+},
 
+    'TEST': {rIgno: true, auto: 3, terms: 
+    `test - test
     `
-};
+}};
+
     
 export const topics = Object.keys(data);

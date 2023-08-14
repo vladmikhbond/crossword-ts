@@ -15,14 +15,14 @@ export class Term {
         this.freq = freq;
     }
 
-    static loadData(topic: string) {
-        if (!data[topic]) {
-           topic = topics[0];
+    static loadTopic(key: string) {
+        if (!data[key]) {
+           key = topics[0];
         }
 
         let terms = [];
 
-        let lines = data[topic].split('\n');
+        let lines = data[key].terms.split('\n');
         for (let line of lines) {
             let [word, def] = line.split(' - ').map(x => x.trim());
             if (word && def && word != '' && def != '') {
@@ -32,7 +32,7 @@ export class Term {
                 console.error('DATA ERROR:', line);
             }
         }
-        return terms; 
+        return {terms, topic: data[key]}; 
     }
 }
 

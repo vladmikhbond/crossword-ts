@@ -1,6 +1,7 @@
 import Crossword from './crossword'
 import Storage from "$lib/storage";
 import { Term, EMPTY } from './classes';
+import {data}  from './data'
 
 const ATTEMPTS = 100;          // кількість кросвордів-кандидатів
 
@@ -9,11 +10,13 @@ const ATTEMPTS = 100;          // кількість кросвордів-кан
  * Це продовж. доки не буде побудований к. з достатньою кількістю терамінів або не вичерпається кількість спроб.
  * 
  */
-export function getBestCrossword(topic: string, size: number) {
+export function getBestCrossword(topicKey: string, size: number) {
     
+    let rIgno = data[topicKey].rIgno;
+
     // load terms from local storage
     let allTerms = Storage
-        .readTerms(topic)
+        .readTerms(topicKey)
         .filter((t:Term) => t.word.length <= size);
     allTerms.sort((a:Term, b: Term) => a.freq - b.freq);
 
@@ -21,10 +24,10 @@ export function getBestCrossword(topic: string, size: number) {
     
     let terms = allTerms.slice(0, n);
 
-    let best = new Crossword(size, terms);
+    let best = new Crossword(size, terms, rIgno);
     for (let i = 0; i < ATTEMPTS && best.useds.length < size ; i++) {
         terms = allTerms.slice(0, n);
-        let next = new Crossword(size, terms);
+        let next = new Crossword(size, terms, rIgno);
         if (next.useds.length > best.useds.length) {
             best = next;             
         }        

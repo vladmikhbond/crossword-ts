@@ -13,7 +13,7 @@ export default class Storage
                 return JSON.parse(jsonString);
             }    
         }   
-        return Term.loadData(topic);
+        return Term.loadTopic(topic).terms;
     }
 
 
