@@ -1,12 +1,13 @@
 import { browser } from '$app/environment';
 
 import { getTopicTerms } from '$lib/data'
+import type { Term } from './classes';
 
 const TOPIC_INDEX_KEY = 'topicIdx';
 
 export default class Storage 
 {
-    static readTerms(topicKey: string) 
+    static readTerms(topicKey: string) : Term[]
     {
         if (browser) {
             let jsonString = window.localStorage.getItem(topicKey);
@@ -31,7 +32,6 @@ export default class Storage
             localStorage.setItem(topic, jsonString);
         }
     }
-
 
 
     static saveTopicIdx(topicIdx: number) 

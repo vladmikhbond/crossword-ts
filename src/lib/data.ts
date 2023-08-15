@@ -2,12 +2,10 @@ import { Term } from './classes'
 
 type Topic = {rIgno: boolean, auto: number, terms: string };
 
-/**
- * 
- */  
+  
 export const data: {[key: string]: Topic} = 
 {
-    JavaScript: {rIgno: false, auto: 3, terms: 
+    JavaScript: {rIgno: false, auto: 5, terms: 
     `transpiler - перекладач з нової версії мови на стару версію
     polyphile - бібліотека, яка додає функції, відсутні у цільовій версії стандарту
     typeof - Операція визначення типу

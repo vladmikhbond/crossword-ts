@@ -30,7 +30,7 @@
         if (cw.field[r][c].char != '') {
             moveFocusAfterInput(r, c); 
         }
-        paintSolvedWord(r, c); 
+        paintSolvedWord(); 
     }
     
 
@@ -76,8 +76,8 @@
 	}
 
 
-    function paintSolvedWord(r:number, c:number)  {
-        let useds = cw!.useds.filter(u => u.contains(r, c));
+    function paintSolvedWord()  {
+        let useds = cw!.useds; 
         useds.forEach( u => { 
             let ok = cw!.isUsedOk(u);
             let i = 0;

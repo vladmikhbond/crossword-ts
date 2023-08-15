@@ -13,7 +13,7 @@
     <!-- svelte-ignore a11y-missing-attribute -->
     <img src="{used.term.def}"/>
   {:else}
-    <pre>{used.term.def}</pre>
+    <pre style="display:inline;">{used.term.def}</pre>
   {/if}
 </div>
 
@@ -29,6 +29,7 @@
   .dir {
     font-size: 20px;
     font-weight: 900;
+    color: red;
   }
 
 

@@ -5,6 +5,7 @@
  	import type { Used } from "$lib/classes";
     import Storage from "$lib/storage";
     import Xword from "./Xword.svelte";
+    import ccc from "../../static/next-level.mp3"
 
     const INIT_SIZE = 15;
     
@@ -13,7 +14,7 @@
     let cw: Crossword | null;
     let stopped = true;
     let info: Used[];
-
+    let percentage = '';
     
     function newButton_click() {
         if (size < 10 || size >= 100 ) {
@@ -29,15 +30,25 @@
     }
 
     /** Save the right answers to local storage and uncover field after thet*/
-    function stopButton_click() {
-        // save answers
-        let wordsOk = cw.useds
-            .filter(u => cw.isUsedOk(u))
+    function stopButton_click() 
+    {
+        // save answers to local storage
+        let wordsOk = cw!.useds
+            .filter(u => cw!.isUsedOk(u))
             .map(u => u.term.word);
         Storage.saveTermsToStorage(topicKey, wordsOk);
 
-        // uncover field
-        cw.uncover();
+        // uncover all chars & calculate percentage 
+        let faults = cw!.uncover();
+        let all = cw!.useds.length;
+        percentage = ((all - faults) * 100 / all).toFixed(0) + '%';
+        
+        // congratulation!
+        if (!faults) {
+            let audio = new Audio("next-level.mp3");
+            audio.play();
+        }
+           
         cw = cw;
         stopped = true;  
     }
@@ -75,7 +86,9 @@
 
 {#if !stopped}
     <p> <button on:click={ stopButton_click } class="stop-button">Stop</button> </p>
-{/if}
+{:else}
+    <p> {percentage} </p>
+{/if} 
 
 </div>
 

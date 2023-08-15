@@ -201,10 +201,11 @@ class Crossword
         return this.useds.filter(u => u.contains(r, c))
     }
 
+    /** @returns number of user faults */
     uncover() 
     {
-        let useds = this.useds.filter(u => !this.isUsedOk(u));
-        for (let used of useds) {
+        let wrongUseds = this.useds.filter(u => !this.isUsedOk(u));
+        for (let used of wrongUseds) {
             let word = used.term.word
             for (let i = 0; i < word.length; i++) {
                 if (used.dir == Dir.Hor)
@@ -213,6 +214,7 @@ class Crossword
                    this.field[used.row + i][used.col].char = word[i];        
             }
         }
+        return wrongUseds.length;
     }
     
 
