@@ -5,8 +5,6 @@
  	import type { Used } from "$lib/classes";
     import Storage from "$lib/storage";
     import Xword from "./Xword.svelte";
-    import ccc from "../../static/next-level.mp3"
-
     const INIT_SIZE = 15;
     
     let size = INIT_SIZE;
@@ -45,7 +43,8 @@
         
         // congratulation!
         if (!faults) {
-            let audio = new Audio("next-level.mp3");
+            let file = Math.random() > 0.5 ? "next-level.mp3" : "guitar.mp3"
+            let audio = new Audio(file);
             audio.play();
         }
            
