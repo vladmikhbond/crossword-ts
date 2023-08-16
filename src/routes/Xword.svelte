@@ -42,16 +42,27 @@
         let rightEl = document.getElementById(rc2id(r, c+1));
 
         if (downEl && rightEl) {
-            if (cw.field[r+1][c].char === EMPTY && cw.field[r][c+1].char !== EMPTY) {
+            let dBlank = cw.field[r + 1][c].char === '';
+            let rBlank = cw.field[r][c + 1].char === '';            
+            if (dBlank === rBlank) {
+                if (writeDir === Dir.None) {
+                   writeDir = Dir.Hor; 
+                }
+            } 
+            else if (cw.field[r+1][c].char === '') 
+            {
                writeDir = Dir.Ver;
-            } else if (cw.field[r+1][c].char !== EMPTY && cw.field[r][c+1].char === EMPTY) {
+            } else {
                writeDir = Dir.Hor;  
             }
-        } else if (downEl) {
+        } 
+        if (downEl && !rightEl) {
             writeDir = Dir.Ver;
-        } else if (rightEl) {
+        }
+        if (!downEl && rightEl) {
             writeDir = Dir.Hor;
-        } else {
+        }
+        if (!downEl && !rightEl) {
             writeDir == Dir.None
         }
 
