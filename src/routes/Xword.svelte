@@ -13,7 +13,9 @@
     const rc2id = (r:number, c:number) => (r * 100 + c).toString();
     const id2rc = (id:number) => [id / 100 | 0, id % 100];
 
-
+    
+    let chTop = 0;
+    let chWidth = 0;
 
     function input_input(e: { data: string }, r: number, c:number) 
     {   
@@ -70,9 +72,9 @@
         inputElement.selectionStart = inputElement.value.length;
         inputElement.selectionEnd = inputElement.value.length;
         //
-        if (cw!.field[r][c].info.length > 0) {
-            info = cw!.field[r][c].info;
-        }
+        info = cw!.field[r][c].info;
+        chTop = (r - cw!.size) * 19 + 40; 
+        chWidth = cw ? cw.size * 19 : 0;
 	}
 
 
@@ -89,10 +91,12 @@
                 }
             }            
         })
-    }    
+    }
+
 </script>
 
 {#if cw}
+<div>
     <table>
         {#each cw.field as line, r}
             <tr>
@@ -116,10 +120,14 @@
         {/each}
     </table>
 
-    {#each info as used}
-        <Challenge used={used} />
-    {/each}
-
+    {#if info.length > 0}
+        <div class='chalenge' style="top: {chTop}px; width: {chWidth}px">
+        {#each info as used}
+            <Challenge used={used} />
+        {/each}
+        </div>
+    {/if}
+</div>   
 {/if} 
 
 
@@ -154,6 +162,15 @@
     }
     tr, td {
         padding: 0px;
+    }
+
+    .chalenge {
+        position: relative;
+        background-color: aliceblue;
+        border: 2px solid gray ;
+        box-shadow: 10px 5px 5px darkgray;
+        left: 10px;
+        text-align: center;
     }
 
 </style>

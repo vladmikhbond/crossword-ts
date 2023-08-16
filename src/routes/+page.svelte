@@ -73,21 +73,23 @@
         </select>
     </h3> 
 
-    <p>
-        <label title="size < 100">Size <input class="cw-size" bind:value={size} /></label>
+    <div>
+        Size <input class="cw-size" bind:value={size} />
         <button on:click={ newButton_click } class="new-button">New</button>       
-    </p>
+    </div>
 {:else}
     <span>{topicKey} <small> (регістр {cw?.regIgnore ? 'не ' : '' }має значення)</small> </span>
 {/if}
-
-<Xword cw={cw} info={info} />
 
 {#if !stopped}
     <p> <button on:click={ stopButton_click } class="stop-button">Stop</button> </p>
 {:else}
     <p> {percentage} </p>
 {/if} 
+
+
+<Xword cw={cw} info={info} />
+
 
 </div>
 
@@ -111,6 +113,5 @@
     option {
         font: 800;
     }
-
 
 </style>

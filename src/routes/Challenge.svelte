@@ -4,32 +4,42 @@
 
   export let used: Used;
 
+  let arrow = '';
+  $: arrow = used.dir == Dir.Hor ? '→' : '↓';
+
+  
 </script>
  
-<div>
-  <span class='dir'>{used.dir == Dir.Hor ? '→' : '↓'}</span> 
-
+  <div class='arrow'>{arrow}</div>
   {#if (used.term.def.startsWith('Http'))}
+
     <!-- svelte-ignore a11y-missing-attribute -->
-    <img src="{used.term.def}"/>
+    <img src="{used.term.def}" class="image"/>
   {:else}
-    <pre style="display:inline;">{used.term.def}</pre>
+    <pre class="text">  {used.term.def}</pre>
   {/if}
-</div>
+
 
 <style>
-  img {
-     width: 100px;
-     height: 100px;
-     object-fit:contain;
-     border: thin solid gray;
-     margin-top: 10px;
-     background-color: gainsboro;
-  }
-  .dir {
+  .arrow {
     font-size: 20px;
     font-weight: 900;
     color: red;
+  }
+
+  .image {
+     width: 120px;
+     height: 120px;
+     object-fit:contain;
+     background-color: aliceblue;  
+  }
+
+  .text {
+      white-space:pre-wrap;
+      padding: 0 10px 0 10px;
+      width: 100%;
+      display: grid;
+      place-items: center;
   }
 
 
