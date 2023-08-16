@@ -5,6 +5,8 @@ import {shuffleArray} from './utils'
 /** Підтримує автоматичну побудову та вирішення кросворду користвачем. */
 class Crossword 
 {
+    static empty: Crossword = new Crossword(1, [new Term('x', 'x')]);
+
     private static K = 3   // K * size = кількість спроб додавання слова в кросворд
     
     /** Терміни, використані для побудови к.*/

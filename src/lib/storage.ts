@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 
 import { getTopicTerms } from '$lib/data'
-import type { Term } from './classes';
+import { Term } from './classes';
 
 const TOPIC_INDEX_KEY = 'topicIdx';
 
@@ -12,7 +12,8 @@ export default class Storage
         if (browser) {
             let jsonString = window.localStorage.getItem(topicKey);
             if (jsonString) {
-                return JSON.parse(jsonString);
+                let savedTerms = JSON.parse(jsonString);
+                return savedTerms.map((t:Term) => new Term(t.word, t.def));
             }    
         }   
         return getTopicTerms(topicKey);

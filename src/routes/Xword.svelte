@@ -1,11 +1,11 @@
 <!-- crossword + highlight -->
 
 <script lang="ts">
-    import type Crossword from "$lib/crossword";
+    import Crossword from "$lib/crossword";
     import {EMPTY, Dir, Used} from "$lib/classes";
     import Challenge from "./Challenge.svelte";
 
-    export let cw: Crossword | null; 
+    export let cw = Crossword.empty; 
     export let info: Used[] = [];
 
     let writeDir = Dir.None;  
@@ -19,8 +19,6 @@
 
     function input_input(e: { data: string }, r: number, c:number) 
     {   
-        if (!cw) return;
-
         // Щоб зоставалося лише одна літера у полі вводу.       
         if (e.data?.length == 1) {
             cw.field[r][c].char = e.data;
@@ -44,9 +42,9 @@
         let rightEl = document.getElementById(rc2id(r, c+1));
 
         if (downEl && rightEl) {
-            if (cw!.field[r+1][c].char === EMPTY && cw!.field[r][c+1].char !== EMPTY) {
+            if (cw.field[r+1][c].char === EMPTY && cw.field[r][c+1].char !== EMPTY) {
                writeDir = Dir.Ver;
-            } else if (cw!.field[r+1][c].char !== EMPTY && cw!.field[r][c+1].char === EMPTY) {
+            } else if (cw.field[r+1][c].char !== EMPTY && cw.field[r][c+1].char === EMPTY) {
                writeDir = Dir.Hor;  
             }
         } else if (downEl) {
@@ -72,22 +70,23 @@
         inputElement.selectionStart = inputElement.value.length;
         inputElement.selectionEnd = inputElement.value.length;
         //
-        info = cw!.field[r][c].info;
-        chTop = (r - cw!.size) * 19 + 40; 
-        chWidth = cw ? cw.size * 19 : 0;
+        info = cw.field[r][c].info;
+        chTop = (r - cw.size) * 19 + 40; 
+        
+        chWidth = info[0] && info[0].term.isDefImage() ? 130 : cw.size * 19;
 	}
 
 
     function paintSolvedWord()  {
-        let useds = cw!.useds; 
+        let useds = cw.useds; 
         useds.forEach( u => { 
-            let ok = cw!.isUsedOk(u);
+            let ok = cw.isUsedOk(u);
             let i = 0;
             for (let id of u.areal()) {
                 let [r, c] = id2rc(id);
                 if (ok) {
-                    cw!.field[r][c].solved = true;
-                    cw!.field[r][c].char = u.term.word[i++];
+                    cw.field[r][c].solved = true;
+                    cw.field[r][c].char = u.term.word[i++];
                 }
             }            
         })
@@ -95,8 +94,8 @@
 
 </script>
 
-{#if cw}
-<div>
+{#if cw !== Crossword.empty}
+<div class="center-container">
     <table>
         {#each cw.field as line, r}
             <tr>
@@ -121,7 +120,7 @@
     </table>
 
     {#if info.length > 0}
-        <div class='chalenge' style="top: {chTop}px; width: {chWidth}px">
+        <div class='chalenge-box' style="top: {chTop}px; width: {chWidth}px">
         {#each info as used}
             <Challenge used={used} />
         {/each}
@@ -164,13 +163,20 @@
         padding: 0px;
     }
 
-    .chalenge {
+    .chalenge-box {
         position: relative;
         background-color: aliceblue;
         border: 2px solid gray ;
         box-shadow: 10px 5px 5px darkgray;
         left: 10px;
         text-align: center;
+        padding-right: 5px;
+        left: 0;
+    }
+
+    .center-container {
+        display: grid;
+        place-items: center;
     }
 
 </style>

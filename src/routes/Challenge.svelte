@@ -1,18 +1,17 @@
 
 <script lang="ts">
-	import { Dir, Used } from "$lib/classes";
+	import { Dir, Used} from "$lib/classes";
 
   export let used: Used;
 
   let arrow = '';
   $: arrow = used.dir == Dir.Hor ? '→' : '↓';
 
-  
+
 </script>
  
   <div class='arrow'>{arrow}</div>
-  {#if (used.term.def.startsWith('Http'))}
-
+  {#if used.term.isDefImage() }
     <!-- svelte-ignore a11y-missing-attribute -->
     <img src="{used.term.def}" class="image"/>
   {:else}

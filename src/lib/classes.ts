@@ -14,7 +14,10 @@ export class Term {
         this.def = def;
         this.freq = freq;
     }
-
+    
+    isDefImage(): boolean {
+        return this.def.startsWith('Http');
+    }
 }
 
 

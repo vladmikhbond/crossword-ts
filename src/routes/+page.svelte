@@ -1,6 +1,6 @@
 <script lang="ts">
     import {getBestCrossword } from "$lib/model";
-    import type Crossword from "$lib/crossword";
+    import Crossword from "$lib/crossword";
     import {topics}  from '$lib/data'
  	import type { Used } from "$lib/classes";
     import Storage from "$lib/storage";
@@ -9,7 +9,7 @@
     
     let size = INIT_SIZE;
     let topicKey = topics[Storage.readTopicIdx()];
-    let cw: Crossword | null;
+    let cw: Crossword;
     let stopped = true;
     let info: Used[];
     let percentage = '';
@@ -17,13 +17,11 @@
     function newButton_click() {
         if (size < 10 || size >= 100 ) {
             alert('Size grate then 10 and less then 100')
-            cw = null;
+            cw = Crossword.empty;
             return;
         }
         cw = getBestCrossword(topicKey, size);
         info = []; 
-        // let resume = `${topicKey} - ${cw?.useds.length}\n` + (cw.regIgnore ? 'Регістр не має значення' : ''); 
-
         stopped = false;           
     }
 
@@ -31,14 +29,14 @@
     function stopButton_click() 
     {
         // save answers to local storage
-        let wordsOk = cw!.useds
-            .filter(u => cw!.isUsedOk(u))
+        let wordsOk = cw.useds
+            .filter(u => cw.isUsedOk(u))
             .map(u => u.term.word);
         Storage.saveTermsToStorage(topicKey, wordsOk);
 
         // uncover all chars & calculate percentage 
-        let faults = cw!.uncover();
-        let all = cw!.useds.length;
+        let faults = cw.uncover();
+        let all = cw.useds.length;
         percentage = ((all - faults) * 100 / all).toFixed(0) + '%';
         
         // congratulation!
