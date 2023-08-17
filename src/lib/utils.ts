@@ -14,7 +14,7 @@ export function shuffleArray(array: any[]) {
 }
 
 
-/** Друкує кроссворд */
+/** Друкує кроссворд в консолі */
 export function CrosswordLog(cw: Crossword) 
 {
     for (let r = 0; r < cw.field.length; r++) {

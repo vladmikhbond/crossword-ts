@@ -2,53 +2,43 @@ export const EMPTY = '\uffff';
 export enum Dir { None, Hor, Ver };
 
 
-
-export class Term {
-
-    word: string;   // слово
-    def: string;    // дефініція слова
-    freq: number;   // кількість вдалих відповідей (для збереження в лок.сховище)
-
-    constructor(word: string, def: string, freq=0) {
-        this.word = word;
-        this.def = def;
-        this.freq = freq;
-    }
+/**
+ *   word - слово
+ *   def - дефініція слова
+ *   freq - кількість вдалих відповідей (для збереження в лок.сховище)
+ */
+export class Term 
+{
+    constructor(
+            public word: string, 
+            public def: string, 
+            public freq=0) { }
     
     isDefImage(): boolean {
         return this.def.startsWith('Http');
     }
 }
 
-
-export class Cell {
-
-    char: string;
-    dir: Dir;
-    solved: boolean;
+export class Cell 
+{
     info: Used[];
 
-    constructor(char = EMPTY, dir=Dir.Hor, solved=false) {
-        this.char = char;
-        this.dir = dir;
-        this.solved = solved;
+    constructor(
+            public char = EMPTY, 
+            public dir=Dir.Hor, 
+            public solved=false) {
         this.info = [];
     }
 }
 
-export class Used {
-    
-    term: Term;
-    row: number;
-    col: number;
-    dir: Dir;
 
-    constructor(term: Term, r: number, c:number, dir:Dir) {
-        this.term = term;
-        this.row = r;
-        this.col = c;
-        this.dir = dir;
-    }
+export class Used 
+{
+    constructor(
+            public term: Term, 
+            public row: number, 
+            public col:number, 
+            public dir:Dir) {}
 
     areal() {
         const arr = [];
