@@ -38,14 +38,7 @@
         let faults = cw.uncover();
         let all = cw.useds.length;
         percentage = ((all - faults) * 100 / all).toFixed(0) + '%';
-        
-        // congratulation!
-        if (!faults) {
-            let file = Math.random() > 0.5 ? "next-level.mp3" : "guitar.mp3"
-            let audio = new Audio(file);
-            audio.play();
-        }
-           
+                           
         cw = cw;
         stopped = true;  
     }

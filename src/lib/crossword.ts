@@ -210,6 +210,10 @@ class Crossword
         return wrongUseds.length;
     }
     
+    success() 
+    {
+        return this.useds.every(u => this.isUsedOk(u))
+    }
 
     isUsedOk(used: Used): boolean {
         const word = this.regIgnore ? used.term.word.toLowerCase() : used.term.word;

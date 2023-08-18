@@ -23,3 +23,12 @@ export function CrosswordLog(cw: Crossword)
         console.log(`${r}\t${line}`);
     }
 }
+
+
+/** */
+export function audioPlay() {
+    const files = ["next-level.mp3", "guitar.mp3", "fanfara-prazd.mp3", "fanfaryi.mp3", "fanfaryi-itogi.mp3", "zvuk-fanfar3.mp3"];
+    const i = (Math.random() * files.length) | 0 ;
+    let audio = new Audio(`sounds/${files[i]}`);
+    audio.play();
+}

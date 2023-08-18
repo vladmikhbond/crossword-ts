@@ -4,6 +4,7 @@
     import Crossword from "$lib/crossword";
     import {EMPTY, Dir, Used} from "$lib/classes";
     import Challenge from "./Challenge.svelte";
+    import {audioPlay} from "$lib/utils";
 
     export let cw = Crossword.empty; 
     export let info: Used[] = [];
@@ -31,6 +32,11 @@
             moveFocusAfterInput(r, c); 
         }
         paintSolvedWord(); 
+
+        // congratulations
+        if (cw.success()) {
+            audioPlay()
+         }
     }
     
 

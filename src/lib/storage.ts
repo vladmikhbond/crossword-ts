@@ -13,7 +13,7 @@ export default class Storage
             let jsonString = window.localStorage.getItem(topicKey);
             if (jsonString) {
                 let savedTerms = JSON.parse(jsonString);
-                return savedTerms.map((t:Term) => new Term(t.word, t.def));
+                return savedTerms.map((t:Term) => new Term(t.word, t.def, t.freq));
             }    
         }   
         return getTopicTerms(topicKey);
