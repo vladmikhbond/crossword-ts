@@ -1,8 +1,8 @@
 
 <script lang="ts">
-	import { Dir, Occupier} from "$lib/modelClasses";
+	import { Dir, BoundTerm} from "$lib/modelClasses";
 
-  export let used: Occupier;
+  export let used: BoundTerm;
 
   let arrow = '';
   $: arrow = used.dir == Dir.Hor ? '→' : '↓';

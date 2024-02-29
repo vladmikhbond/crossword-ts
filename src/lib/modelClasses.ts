@@ -3,6 +3,7 @@ export enum Dir { None, Hor, Ver };
 
 
 /**
+ *   Термін = слово + його визначення.
  *   word - слово
  *   def - дефініція слова
  *   freq - кількість вдалих відповідей (для збереження в лок.сховище)
@@ -19,9 +20,12 @@ export class Term
     }
 }
 
+/**
+ * Комірка кросворду
+ */
 export class Cell 
 {
-    info: Occupier[];
+    info: BoundTerm[];
 
     constructor(
             public char = EMPTY, 
@@ -30,32 +34,37 @@ export class Cell
     {
         this.info = [];
     }
+
+    get isStarter() { return this.info.length > 0; } 
 }
 
-
-export class Occupier 
+/**
+ * Термін, прив'язаний до певної комірки.
+ */
+export class BoundTerm 
 {
     constructor(
             public term: Term, 
             public row: number, 
-            public col:number, 
+            public col: number, 
             public dir:Dir) {}
+
+    contains(r: number, c: number) {
+        const rc = r * 100 + c;
+        return this.areal().indexOf(rc) > -1;
+    }
 
     areal() {
         const arr = [];
         const word = this.term.word;
         for (let i = 0; i < word.length; i++) {
-            const id = this.dir === Dir.Hor ? 
+            const rc = this.dir === Dir.Hor ? 
                 this.row * 100 + (this.col + i) :
                 (this.row + i) * 100 + this.col
-            arr.push(id);
+            arr.push(rc);
         }
         return arr;
     }
     
-    contains(r: number, c: number) {
-        const id = r * 100 + c;
-        return this.areal().indexOf(id) > -1;
-    }
 }
 

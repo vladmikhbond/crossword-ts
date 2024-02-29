@@ -2,7 +2,7 @@
     import {getBestCrossword } from "$lib/model";
     import Crossword from "$lib/crossword";
     import {topics}  from '$lib/data'
- 	import type { Occupier } from "$lib/modelClasses";
+ 	import type { BoundTerm } from "$lib/modelClasses";
     import Storage from "$lib/storage";
     import Xword from "./Xword.svelte";
     const INIT_SIZE = 15;
@@ -11,7 +11,7 @@
     let topicKey = topics[Storage.readTopicIdx()];
     let cw: Crossword;
     let stopped = true;
-    let info: Occupier[];
+    let info: BoundTerm[];
     let percentage = '';
     
     function newButton_click() {
@@ -29,14 +29,14 @@
     function stopButton_click() 
     {
         // save answers to local storage
-        let wordsOk = cw.useds
+        let wordsOk = cw.usedTerms
             .filter(u => cw.isUsedOk(u))
             .map(u => u.term.word);
         Storage.saveTermsToStorage(topicKey, wordsOk);
 
         // uncover all chars & calculate percentage 
         let faults = cw.uncover();
-        let all = cw.useds.length;
+        let all = cw.usedTerms.length;
         percentage = ((all - faults) * 100 / all).toFixed(0) + '%';
                            
         cw = cw;

@@ -2,14 +2,14 @@
 
 <script lang="ts">
     import Crossword from "$lib/crossword";
-    import {EMPTY, Dir, Occupier} from "$lib/modelClasses";
+    import {EMPTY, Dir, BoundTerm} from "$lib/modelClasses";
     import Challenge from "./Challenge.svelte";
     import {audioPlay} from "$lib/utils";
 
     // current crossword
     export let xw = Crossword.empty;
-     
-    export let info: Occupier[] = [];
+
+    export let info: BoundTerm[] = [];
 
     let writeDir = Dir.None;  
 
@@ -20,7 +20,7 @@
     let chTop = 0;
     let chWidth = 0;
 
-    function input_input(e: { data: string }, r: number, c:number) 
+    function input_input(e: any, r: number, c:number) 
     {   
         // Щоб зоставалося лише одна літера у полі вводу.       
         if (e.data?.length == 1) {
@@ -97,7 +97,7 @@
 
 
     function paintSolvedWord()  {
-        let useds = xw.useds; 
+        let useds = xw.usedTerms; 
         useds.forEach( u => { 
             let ok = xw.isUsedOk(u);
             let i = 0;
@@ -126,7 +126,7 @@
                             bind:value='{xw.field[r][c].char}'
                             on:input={e => input_input(e, r, c)} 
                             on:focus={e => input_focus(e, r, c)} 
-                            class="{xw.field[r][c].info.length > 0 ? 'head-cell' :'body-cell'}"
+                            class="{xw.field[r][c].isStarter ? 'head-cell' :'body-cell'}"
                             class:solved={xw.field[r][c].solved}
                             />        
                     {:else}

@@ -26,10 +26,10 @@ export function getBestCrossword(topicKey: string, size: number) {
     let terms = allTerms.slice(0, n);
 
     let best = new Crossword(size, terms, rIgno, auto);
-    for (let i = 0; i < ATTEMPTS && best.useds.length < size ; i++) {
+    for (let i = 0; i < ATTEMPTS && best.usedTerms.length < size ; i++) {
         terms = allTerms.slice(0, n);
         const next = new Crossword(size, terms, rIgno, auto);
-        if (next.useds.length > best.useds.length) {
+        if (next.usedTerms.length > best.usedTerms.length) {
             best = next;             
         }        
     }
@@ -53,7 +53,7 @@ function replaceLettersWithSpaces(cw: Crossword)
 }
 
 function setInfoToSomeCells(cw: Crossword)  {
-    for (const used of cw.useds) {
+    for (const used of cw.usedTerms) {
         const cell = cw.field[used.row][used.col];
         cell.info.push(used);
     }
