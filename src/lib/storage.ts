@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 
 import { getTopicTerms } from '$lib/data'
-import { Term } from './classes';
+import { Term } from './modelClasses';
 
 const TOPIC_INDEX_KEY = 'topicIdx';
 
@@ -10,9 +10,9 @@ export default class Storage
     static readTerms(topicKey: string) : Term[]
     {
         if (browser) {
-            let jsonString = window.localStorage.getItem(topicKey);
+            const jsonString = window.localStorage.getItem(topicKey);
             if (jsonString) {
-                let savedTerms = JSON.parse(jsonString);
+                const savedTerms = JSON.parse(jsonString);
                 return savedTerms.map((t:Term) => new Term(t.word, t.def, t.freq));
             }    
         }   
@@ -22,7 +22,7 @@ export default class Storage
 
     static saveTermsToStorage(topic: string, wordsOk: string[]) 
     {
-        let terms = Storage.readTerms(topic);
+        const terms = Storage.readTerms(topic);
         for (let i = 0; i < terms.length; i++) {
             if (wordsOk.indexOf(terms[i].word) > -1) {
                 terms[i].freq++;
@@ -47,7 +47,7 @@ export default class Storage
     {   
         let topicIdx = 0;
         if (browser) {
-            let str = localStorage.getItem(TOPIC_INDEX_KEY);
+            const str = localStorage.getItem(TOPIC_INDEX_KEY);
             if (str) {
                topicIdx = +str;
             }

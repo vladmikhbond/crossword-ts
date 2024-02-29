@@ -1,4 +1,4 @@
-import { Term, Used, Cell, EMPTY, Dir } from './classes'
+import { Term, Occupier, Cell, EMPTY, Dir } from './modelClasses'
 import {shuffleArray} from './utils'
 
 
@@ -10,7 +10,7 @@ class Crossword
     private static K = 3   // K * size = кількість спроб додавання слова в кросворд
     
     /** Терміни, використані для побудови к.*/
-    useds: Used[] = [];   
+    useds: Occupier[] = [];   
     /** Кількість перетинів слів */ 
     xCount = 0;
     /** Ігрове поле */ 
@@ -48,8 +48,8 @@ class Crossword
 
     private buildCrossword() 
     {
-        let r = this.size / 2 |0;
-        let c = (this.size - this.terms[0].word.length) / 2 |0;
+        const r = this.size / 2 |0;
+        const c = (this.size - this.terms[0].word.length) / 2 |0;
         
         this.useFirstTerm_n_Trans(r, c);
 
@@ -64,11 +64,11 @@ class Crossword
            return;
 
         // Find all the suitable places      
-        let places = [];
-        let word = this.terms[0].word;
+        const places = [];
+        const word = this.terms[0].word;
         for (let r = 0; r < this.size; r++) {
             for (let c = 0; c < this.size - word.length; c++) {
-                let xs = this.estimate(word, r, c);
+                const xs = this.estimate(word, r, c);
                 if (xs > 0) {
                     places.push({r, c, xs})
                 }
@@ -77,12 +77,15 @@ class Crossword
         
         // Random select one of places
         if (places.length) {
-            let i = Math.floor(Math.random() * places.length);
+            const i = Math.floor(Math.random() * places.length);
             this.useFirstTerm_n_Trans(places[i].r, places[i].c);
             this.xCount += places[i].xs;    
         } else {
             // move a bad term to the end of this.terms
-            this.terms.push(this.terms.shift()!)
+            const badTerm = this.terms.shift();
+            if (badTerm) {
+                this.terms.push(badTerm);
+            }
         }
     }
 
@@ -97,18 +100,18 @@ class Crossword
             return -1;
            
         for (let i = 0; i < word.length; i++) {
-            let cell = this.field[r][c + i];
-            // зверху до слова не має бути дотиків
+            const cell = this.field[r][c + i];
+            // зверху не має бути дотиків до слова 
             if (cell.char === EMPTY && r > 0 && this.field[r - 1][c + i].char !== EMPTY)
                return -1; 
-            // знизу до слова не має бути дотиків
+            // знизу не має бути дотиків до слова
             if (cell.char === EMPTY && r < this.size - 1 && this.field[r + 1][c + i].char !== EMPTY)
                return -1;       
         }
 
         let xCount = 0;
         for (let i = 0; i < word.length; i++) {
-            let cell = this.field[r][c + i];
+            const cell = this.field[r][c + i];
             // клітина пуста -> ok
             if (cell.char === EMPTY) 
                 continue;
@@ -128,13 +131,13 @@ class Crossword
 
     private useFirstTerm_n_Trans(r: number, c: number) 
     {
-        let term = this.terms[0];
-        let word = term.word;
+        const term = this.terms[0];
+        const word = term.word;
 
         for (let i = 0; i < word.length; i++) {
             this.field[r][c + i] = new Cell(word[i], Dir.Hor);
         }
-        let newUsed = new Used(term, r, c, Dir.Hor);
+        const newUsed = new Occupier(term, r, c, Dir.Hor);
 
         // move from 'this.useds' to 'this.terms'
         this.useds.push(newUsed);
@@ -146,7 +149,7 @@ class Crossword
     private transpose() 
     { 
 
-        function transDir(cell: Cell | Used) {
+        function transDir(cell: Cell | Occupier) {
             cell.dir = cell.dir == Dir.Hor ? Dir.Ver : Dir.Hor;
         }
         
@@ -164,7 +167,7 @@ class Crossword
         }
 
         // transpose useds 
-        for (let used of this.useds) {
+        for (const used of this.useds) {
             [used.row, used.col] = [used.col, used.row];
             transDir(used);
         }
@@ -173,15 +176,15 @@ class Crossword
 //#endregion
 
      
-    private getUserWord(used: Used): string {
+    private getUserWord(used: Occupier): string {
         const { row, col, dir } = used;
         const word = used.term.word;
-        let arr: string[] = [];
+        const arr: string[] = [];
         for (let i = 0; i < word.length; i++) {
-            let cell = dir === Dir.Ver ? 
-               this.field[row + i][col] : 
-               this.field[row][col + i];
-            let char = cell.char.trim().slice(0, 1);
+            const cell = dir === Dir.Ver ? 
+                    this.field[row + i][col] : 
+                    this.field[row][col + i];
+            const char = cell.char.trim().slice(0, 1);
             arr.push(char);
         } 
         const userWord = this.regIgnore ? arr.join('').toLowerCase() : arr.join('');
@@ -189,7 +192,7 @@ class Crossword
     }
 
 
-    usedsContainsRC(r: number, c: number): Used[]
+    usedsContainsRC(r: number, c: number): Occupier[]
     {
         return this.useds.filter(u => u.contains(r, c))
     }
@@ -197,9 +200,9 @@ class Crossword
     /** @returns number of user faults */
     uncover() 
     {
-        let wrongUseds = this.useds.filter(u => !this.isUsedOk(u));
-        for (let used of wrongUseds) {
-            let word = used.term.word
+        const wrongUseds = this.useds.filter(u => !this.isUsedOk(u));
+        for (const used of wrongUseds) {
+            const word = used.term.word
             for (let i = 0; i < word.length; i++) {
                 if (used.dir == Dir.Hor)
                    this.field[used.row][used.col + i].char = word[i];
@@ -215,7 +218,7 @@ class Crossword
         return this.useds.every(u => this.isUsedOk(u))
     }
 
-    isUsedOk(used: Used): boolean {
+    isUsedOk(used: Occupier): boolean {
         const word = this.regIgnore ? used.term.word.toLowerCase() : used.term.word;
         return word.slice(0, this.auto) === this.getUserWord(used).slice(0, this.auto)
     }

@@ -1,4 +1,5 @@
-import { Term } from './classes'
+/* eslint-disable prefer-const */
+import { Term } from './modelClasses'
 
 type Topic = {rIgno: boolean, auto: number, terms: string };
 
@@ -80,8 +81,8 @@ export const data: {[key: string]: Topic} =
     constructor - посилання на конструктор, що створив об'єкт (властивість об'єкту)`
 },
      
-    Python: {rIgno: false, auto: 3, terms: 
-    `Guido - ім'я атора мови Python
+    Python: {rIgno: false, auto: 5, terms: 
+    `Guido - ім'я автора мови Python
     PyCharm - професійна IDE компанії JetBrains
     int - тип цілих чисел
     float - тип дійсних чисел
@@ -321,10 +322,10 @@ export const data: {[key: string]: Topic} =
 export const topics = Object.keys(data);
 
 export function getTopicTerms(key: string) {
-    let terms = [];
+    const terms = [];
 
-    let lines = data[key].terms.split('\n');
-    for (let line of lines) {
+    const lines = data[key].terms.split('\n');
+    for (const line of lines) {
         let [word, def] = line.split(' - ').map(x => x.trim());
         if (word && def && word != '' && def != '') {
             def = def[0].toUpperCase() + def.slice(1)

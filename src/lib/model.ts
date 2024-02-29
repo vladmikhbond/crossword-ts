@@ -1,6 +1,6 @@
 import Crossword from './crossword'
 import Storage from "$lib/storage";
-import { Term, EMPTY } from './classes';
+import { Term, EMPTY } from './modelClasses';
 import {data}  from './data'
 
 const ATTEMPTS = 100;          // кількість кросвордів-кандидатів
@@ -16,19 +16,19 @@ export function getBestCrossword(topicKey: string, size: number) {
     const auto = data[topicKey].auto;
 
     // load terms from local storage
-    let allTerms = Storage
+    const allTerms = Storage
         .readTerms(topicKey)
         .filter((t:Term) => t.word.length <= size);
     allTerms.sort((a:Term, b: Term) => a.freq - b.freq);
 
-    let n = allTerms.length * 3/4 | 0;
+    const n = allTerms.length * 3/4 | 0;
     
     let terms = allTerms.slice(0, n);
 
     let best = new Crossword(size, terms, rIgno, auto);
     for (let i = 0; i < ATTEMPTS && best.useds.length < size ; i++) {
         terms = allTerms.slice(0, n);
-        let next = new Crossword(size, terms, rIgno, auto);
+        const next = new Crossword(size, terms, rIgno, auto);
         if (next.useds.length > best.useds.length) {
             best = next;             
         }        
@@ -54,7 +54,7 @@ function replaceLettersWithSpaces(cw: Crossword)
 
 function setInfoToSomeCells(cw: Crossword)  {
     for (const used of cw.useds) {
-        let cell = cw.field[used.row][used.col];
+        const cell = cw.field[used.row][used.col];
         cell.info.push(used);
     }
 }

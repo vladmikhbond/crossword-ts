@@ -1,8 +1,8 @@
 
 <script lang="ts">
-	import { Dir, Used} from "$lib/classes";
+	import { Dir, Occupier} from "$lib/modelClasses";
 
-  export let used: Used;
+  export let used: Occupier;
 
   let arrow = '';
   $: arrow = used.dir == Dir.Hor ? '→' : '↓';

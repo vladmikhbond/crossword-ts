@@ -2,7 +2,7 @@
     import {getBestCrossword } from "$lib/model";
     import Crossword from "$lib/crossword";
     import {topics}  from '$lib/data'
- 	import type { Used } from "$lib/classes";
+ 	import type { Occupier } from "$lib/modelClasses";
     import Storage from "$lib/storage";
     import Xword from "./Xword.svelte";
     const INIT_SIZE = 15;
@@ -11,7 +11,7 @@
     let topicKey = topics[Storage.readTopicIdx()];
     let cw: Crossword;
     let stopped = true;
-    let info: Used[];
+    let info: Occupier[];
     let percentage = '';
     
     function newButton_click() {
@@ -79,7 +79,7 @@
 {/if} 
 
 
-<Xword cw={cw} info={info} />
+<Xword xw={cw} info={info} />
 
 
 </div>

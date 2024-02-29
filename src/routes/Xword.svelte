@@ -2,12 +2,14 @@
 
 <script lang="ts">
     import Crossword from "$lib/crossword";
-    import {EMPTY, Dir, Used} from "$lib/classes";
+    import {EMPTY, Dir, Occupier} from "$lib/modelClasses";
     import Challenge from "./Challenge.svelte";
     import {audioPlay} from "$lib/utils";
 
-    export let cw = Crossword.empty; 
-    export let info: Used[] = [];
+    // current crossword
+    export let xw = Crossword.empty;
+     
+    export let info: Occupier[] = [];
 
     let writeDir = Dir.None;  
 
@@ -22,19 +24,19 @@
     {   
         // Щоб зоставалося лише одна літера у полі вводу.       
         if (e.data?.length == 1) {
-            cw.field[r][c].char = e.data;
+            xw.field[r][c].char = e.data;
         } else if (e.data?.length == 2){
-            let pos = e.data?.indexOf(cw.field[r][c].char);
-            cw.field[r][c].char = e.data[1 - pos]; 
+            let pos = e.data?.indexOf(xw.field[r][c].char);
+            xw.field[r][c].char = e.data[1 - pos]; 
         }
 
-        if (cw.field[r][c].char != '') {
+        if (xw.field[r][c].char != '') {
             moveFocusAfterInput(r, c); 
         }
         paintSolvedWord(); 
 
         // congratulations
-        if (cw.success()) {
+        if (xw.success()) {
             audioPlay()
          }
     }
@@ -48,14 +50,14 @@
         let rightEl = document.getElementById(rc2id(r, c+1));
 
         if (downEl && rightEl) {
-            let dBlank = cw.field[r + 1][c].char === '';
-            let rBlank = cw.field[r][c + 1].char === '';            
+            let dBlank = xw.field[r + 1][c].char === '';
+            let rBlank = xw.field[r][c + 1].char === '';            
             if (dBlank === rBlank) {
                 if (writeDir === Dir.None) {
                    writeDir = Dir.Hor; 
                 }
             } 
-            else if (cw.field[r+1][c].char === '') 
+            else if (xw.field[r+1][c].char === '') 
             {
                writeDir = Dir.Ver;
             } else {
@@ -87,23 +89,23 @@
         inputElement.selectionStart = inputElement.value.length;
         inputElement.selectionEnd = inputElement.value.length;
         //
-        info = cw.field[r][c].info;
-        chTop = (r - cw.size) * 19 + 40; 
+        info = xw.field[r][c].info;
+        chTop = (r - xw.size) * 19 + 40; 
         
-        chWidth = info[0] && info[0].term.isDefImage() ? 130 : cw.size * 19;
+        chWidth = info[0] && info[0].term.isDefImage() ? 130 : xw.size * 19;
 	}
 
 
     function paintSolvedWord()  {
-        let useds = cw.useds; 
+        let useds = xw.useds; 
         useds.forEach( u => { 
-            let ok = cw.isUsedOk(u);
+            let ok = xw.isUsedOk(u);
             let i = 0;
             for (let id of u.areal()) {
                 let [r, c] = id2rc(id);
                 if (ok) {
-                    cw.field[r][c].solved = true;
-                    cw.field[r][c].char = u.term.word[i++];
+                    xw.field[r][c].solved = true;
+                    xw.field[r][c].char = u.term.word[i++];
                 }
             }            
         })
@@ -111,21 +113,21 @@
 
 </script>
 
-{#if cw !== Crossword.empty}
+{#if xw !== Crossword.empty}
 <div class="center-container">
     <table>
-        {#each cw.field as line, r}
+        {#each xw.field as line, r}
             <tr>
                 {#each line as _, c} 
                 <td>
-                    {#if cw.field[r][c].char != EMPTY}
+                    {#if xw.field[r][c].char != EMPTY}
                         <input 
                             id={rc2id(r, c)}
-                            bind:value='{cw.field[r][c].char}'
+                            bind:value='{xw.field[r][c].char}'
                             on:input={e => input_input(e, r, c)} 
                             on:focus={e => input_focus(e, r, c)} 
-                            class="{cw.field[r][c].info.length > 0 ? 'head-cell' :'body-cell'}"
-                            class:solved={cw.field[r][c].solved}
+                            class="{xw.field[r][c].info.length > 0 ? 'head-cell' :'body-cell'}"
+                            class:solved={xw.field[r][c].solved}
                             />        
                     {:else}
                         <input disabled class='empty-cell'/>

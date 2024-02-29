@@ -21,18 +21,19 @@ export class Term
 
 export class Cell 
 {
-    info: Used[];
+    info: Occupier[];
 
     constructor(
             public char = EMPTY, 
             public dir=Dir.Hor, 
-            public solved=false) {
+            public solved=false) 
+    {
         this.info = [];
     }
 }
 
 
-export class Used 
+export class Occupier 
 {
     constructor(
             public term: Term, 
@@ -42,9 +43,9 @@ export class Used
 
     areal() {
         const arr = [];
-        let word = this.term.word;
+        const word = this.term.word;
         for (let i = 0; i < word.length; i++) {
-            let id = this.dir === Dir.Hor ? 
+            const id = this.dir === Dir.Hor ? 
                 this.row * 100 + (this.col + i) :
                 (this.row + i) * 100 + this.col
             arr.push(id);
