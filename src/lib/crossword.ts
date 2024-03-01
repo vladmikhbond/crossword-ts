@@ -55,7 +55,7 @@ class Crossword
         this.transpose();
 
         for (let i = 1; i < this.size * Crossword.K; i++) {
-            this.tryUseFirstOfTerms();
+            this.tryUseFirstOfRestTerms();
         }        
     }
 
@@ -76,7 +76,7 @@ class Crossword
     }
 
 
-    private tryUseFirstOfTerms() 
+    private tryUseFirstOfRestTerms() 
     {    
         if (this.terms.length === 0)
            return;
@@ -86,14 +86,14 @@ class Crossword
         const word = this.terms[0].word;
         for (let r = 0; r < this.size; r++) {
             for (let c = 0; c < this.size - word.length; c++) {
-                const xs = this.estimate(word, r, c);
-                if (xs > 0) {
-                    places.push({r, c, xs})
+                const estimate = this.estimate(word, r, c);
+                if (estimate > 0) {
+                    places.push({r, c, xs: estimate})
                 }
             }
         }
         
-        // Random select one of places
+        // Random select one of suitable places
         if (places.length) {
             const i = Math.floor(Math.random() * places.length);
             this.useFirstTerm(places[i].r, places[i].c);
@@ -109,7 +109,7 @@ class Crossword
     }
 
     
-    private estimate (word: string, r: number, c: number) 
+    private estimate (word: string, r: number, c: number): number
     {
         // зліва від слова має бути пусто
         // if (c > 0 && this.field[r][c - 1].char !== EMPTY)
@@ -168,7 +168,7 @@ class Crossword
             transDir(this.field[r][r]);
         }
 
-        // transpose useds 
+        // transpose used terms 
         for (const used of this.usedTerms) {
             [used.row, used.col] = [used.col, used.row];
             transDir(used);
